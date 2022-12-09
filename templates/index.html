@@ -6,11 +6,40 @@
         <title></title>
     </head>
     <body>
-        <div class="grid-container">
-            <div class="sidebar">sidebar</div>
-            <div class="header">header</div>
-            <div class="main">main</div>
-            <div class="settings">settings</div>
+        <div id="grid-container">
+            <div id="sidebar">
+                <div id="chatbot-select">
+                    <img src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector.png" id="chatbot-icon">
+                    <p id="chatbot-name">
+                        Chatbot
+                    </p>
+                </div>
+            </div>
+            <div id="header">
+                <form action="/search" method="post" autocomplete="off" id="search-form">
+                    <input type="text" id="search-bar" placeholder="Search messages here..." list="messages=list">
+                    <datalist id="messages-list">
+                        {% for message in messages_list %}
+                            <option value="{{ message }}">
+                        {% endfor %}
+                    </datalist>
+                </form>
+            </div>
+            <div id="main">
+                <form action="/message" method="post" autocomplete="off" id="message-form">
+                    <input type="text" id="message-input" placeholder="Enter message here...">
+                    <button type="submit" id="message-submit-button">
+                        <img src="https://cdn2.iconfinder.com/data/icons/font-awesome/1792/send-512.png" id="message-submit-icon" alt="message submit icon">
+                    </button>
+                </form>
+            </div>
+            <div id="settings">
+                <form action="/dark" id="dark-mode-form">
+                    <button type="submit" id="dark-mode-button">
+                        <img src="https://cdn-icons-png.flaticon.com/512/6714/6714978.png" id="dark-mode-icon" alt="dark mode icon">
+                    </button>
+                </form>
+            </div>
         </div>
     </body>
 </html>
