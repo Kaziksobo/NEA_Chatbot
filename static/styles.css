@@ -114,9 +114,10 @@ body{
     text-align: center;
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 75vw 2vw; 
+    grid-template-columns: 4vw 72vw 4vw; 
     grid-template-rows: 6vh;
     margin-bottom: 3vh;
+    gap: 1vw;
 }
 #message-input {
     background-color: #44FF4C;
@@ -124,17 +125,24 @@ body{
     border-color: #000000;
     border-width: 3.5px;
     padding: 10px;
-    margin-left: 1.5vw;
     padding-left: 12px;
-    font-size: 2.8vh;
+    font-size: 2.5vh;
 }
 #message-submit-button {
     background: transparent;
     border: none;
-    padding-left: 1vw
 }
 #message-submit-icon {
     height: 100%;
     width: auto;
 }
-
+#microphone-button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+#microphone-icon {
+    height: 100%;
+    width: auto;
+}
