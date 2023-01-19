@@ -43,7 +43,10 @@ body{
     border-bottom: 0vw;
     border-top: 0.25vw solid #000000;
     border-left: 0.25vw solid #000000;
-    display: flex;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 81.5vh 8.5vh;
+    gap: 1vh;
 }
 #settings {
     grid-column: 1;
@@ -55,6 +58,11 @@ body{
     display: flex;
     justify-content: left;
     align-items: center;
+}
+#messages-container {
+    margin-left: 1vw;
+    margin-right: 1vw;
+    border: 2px solid #000000;
 }
 #search-bar {
     background-color: #44FF4C;
@@ -71,6 +79,7 @@ body{
     height: 3vh;
     width: 40vw;
     margin-right: 4vw;
+    box-sizing: content-box;
 }
 ::placeholder {
     color: #000000;
@@ -109,14 +118,12 @@ body{
 }
 #message-form {
     border: none;
-    flex-direction: row;
-    margin-top: auto;
     text-align: center;
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 4vw 72vw 4vw; 
+    grid-template-columns: 3.5vw 74vw 2.5vw; 
     grid-template-rows: 6vh;
-    margin-bottom: 3vh;
+    margin-bottom: auto;
     gap: 1vw;
 }
 #message-input {
@@ -131,6 +138,7 @@ body{
 #message-submit-button {
     background: transparent;
     border: none;
+    margin-right: 1vw;
 }
 #message-submit-icon {
     height: 100%;
@@ -140,9 +148,12 @@ body{
     background: transparent;
     border: none;
     padding: 0;
-    margin: 0;
+    margin-left: 1vw;
 }
 #microphone-icon {
     height: 100%;
     width: auto;
+}
+.ai-message-box, .user-message-box{
+    border: #000000 2px;
 }
