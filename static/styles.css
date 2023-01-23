@@ -16,26 +16,10 @@ body{
 #grid-container > div {
     text-align: center;
 }
-#sidebar {
-    grid-column: 1;
-    grid-row: 1 / 3;
-    border-left: 0vw;
-    border-top: 0vw;
-    border-right: 0.25vw solid #000000;
-    border-bottom: 0.25vw solid #000000;
-    padding: 0;
-}
-#header {
-    grid-column: 2 / 4;
-    grid-row: 1;
-    border-top: 0vw;
-    border-right: 0vw;
-    border-bottom: 0.25vw solid #000000;
-    border-left: 0.25vw solid #000000;
-    display: flex;
-    justify-content: right;
-    align-items: center;  
-}
+
+
+/* content for main div */
+
 #main {
     grid-column: 2 / 4;
     grid-row: 2 / 4;
@@ -48,75 +32,103 @@ body{
     grid-template-rows: 81.5vh 8.5vh;
     gap: 1vh;
 }
-#settings {
-    grid-column: 1;
-    grid-row: 3;
-    border-bottom: 0vw;
-    border-left: 0vw;
-    border-top: 0.25vw solid #000000;
-    border-right: 0.25vw solid #000000;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-}
+
 #messages-container {
+    grid-row: 1;
     margin-left: 1vw;
     margin-right: 1vw;
-    border: 2px solid #000000;
-}
-#search-bar {
-    background-color: #44FF4C;
-    background-image: url(https://www.iconpacks.net/icons/2/free-search-icon-3076-thumb.png);
-    background-position: 10px center;
-    background-repeat: no-repeat;
-    background-size: contain;
-    padding-left: 30px;
-    border-radius: 12px;
-    border-color: #000000;
-    border-width: 2.5px;
-    padding: 4px;
-    padding-left: 60px;
-    height: 3vh;
-    width: 40vw;
-    margin-right: 4vw;
-    box-sizing: content-box;
-}
-::placeholder {
-    color: #000000;
-}
-#chatbot-select {
-    border-bottom: #000000 0.25vw solid;
-    border-right: #000000 0.25vw solid;
-    width: 100%;
     display: grid;
-    grid-template-columns: 35% 65%;
-    grid-template-rows: 10vh;
-    grid-auto-flow: column;
+    grid-template-columns: 100%;
+    grid-template-rows: 11% 11% 11% 11% 11% 11% 11% 11% 11%;
+}
+.message-box {
+    border: 3px solid #000000;
+    border-radius: 22.5px;
     text-align: center;
-    background-color: #FFF384;
+    position: relative;
 }
-#chatbot-icon {
-    height: auto;
-    width: 80%;
-    margin-left: 10px;
-    margin: auto;
-    display: block;
-}
-#chatbot-name {
-    text-align: left;
-    margin-bottom: auto;
+.ai-message-container {
+    width: 60%;
+    height: 60%;
+    max-height: 60%;
+    margin-left: 0;
+    margin-right: auto;
     margin-top: auto;
-    font-size: 2.8vh;
+    margin-bottom: 0;
+    display: grid;
+    grid-template-columns: 7% 93%;
 }
-#dark-mode-button {
-    background-color: transparent;
-    border: none;
+.ai-message-box {
+    height: 100%;
+    grid-column: 2;
+    background-color: #FEE504;
+    border-bottom-left-radius: 0px !important;
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: 100%;
 }
-#dark-mode-icon {
-    height: 8vh;
-    width: auto;
+.ai-message-icon {
+    grid-column: 1; 
+    background-image: url(https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    padding: 0;
+    margin: 0;
 }
+.user-message-box {
+    width: 60%;
+    height: 60%;
+    background-color: #04FEFE;
+    margin-left: auto; 
+    margin-right: 0;
+    margin-top: auto;
+    margin-bottom: 0;
+    border-bottom-right-radius: 0px !important;
+}
+.message-text {
+    margin: 0;
+    margin-left: 2% !important;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-size: 2vh;
+}
+.ai-message-text {
+    grid-column: 1;
+}
+#message-1 {
+    grid-row: 9;
+}
+#message-2 {
+    grid-row: 8;
+}
+#message-3 {
+    grid-row: 7;
+}
+#message-4 {
+    grid-row: 6;
+}
+#message-5 {
+    grid-row: 5;
+}
+#message-6 {
+    grid-row: 4;
+}
+#message-7 {
+    grid-row: 3;
+}
+#message-8 {
+    grid-row: 2;
+}
+#message-9 {
+    grid-row: 1;
+}
+
+/* message input form */
 #message-form {
+    grid-row: 2;
     border: none;
     text-align: center;
     display: grid;
@@ -128,7 +140,7 @@ body{
 }
 #message-input {
     background-color: #44FF4C;
-    border-radius: 12px;
+    border-radius: 22.5px;
     border-color: #000000;
     border-width: 3.5px;
     padding: 10px;
@@ -154,6 +166,99 @@ body{
     height: 100%;
     width: auto;
 }
-.ai-message-box, .user-message-box{
-    border: #000000 2px;
+
+
+/* content for header div */
+
+#header {
+    grid-column: 2 / 4;
+    grid-row: 1;
+    border-top: 0vw;
+    border-right: 0vw;
+    border-bottom: 0.25vw solid #000000;
+    border-left: 0.25vw solid #000000;
+    display: flex;
+    justify-content: right;
+    align-items: center;  
+}
+#search-bar {
+    background-color: #44FF4C;
+    background-image: url(https://www.iconpacks.net/icons/2/free-search-icon-3076-thumb.png);
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    padding-left: 30px;
+    border-radius: 22.5px;
+    border-color: #000000;
+    border-width: 2.5px;
+    padding: 4px;
+    padding-left: 60px;
+    height: 3vh;
+    width: 40vw;
+    margin-right: 4vw;
+    box-sizing: content-box;
+    font-size: 2.3vh;
+}
+::placeholder {
+    color: #000000;
+}
+
+
+/* content for sidebar div */
+
+#sidebar {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    border-left: 0vw;
+    border-top: 0vw;
+    border-right: 0.25vw solid #000000;
+    border-bottom: 0.25vw solid #000000;
+    padding: 0;
+}
+#chatbot-select {
+    border-bottom: #000000 0.25vw solid;
+    border-right: #000000 0.25vw solid;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 35% 65%;
+    grid-template-rows: 10vh;
+    grid-auto-flow: column;
+    text-align: center;
+    background-color: #FFF384;
+}
+#chatbot-icon {
+    height: auto;
+    width: 80%;
+    margin-left: 10px;
+    margin: auto;
+    display: block;
+}
+#chatbot-name {
+    text-align: left;
+    margin-bottom: auto;
+    margin-top: auto;
+    font-size: 2.8vh;
+}
+
+
+/* content for settings div */
+
+#settings {
+    grid-column: 1;
+    grid-row: 3;
+    border-bottom: 0vw;
+    border-left: 0vw;
+    border-top: 0.25vw solid #000000;
+    border-right: 0.25vw solid #000000;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+#dark-mode-button {
+    background-color: transparent;
+    border: none;
+}
+#dark-mode-icon {
+    height: 8vh;
+    width: auto;
 }
