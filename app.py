@@ -8,10 +8,12 @@ def main() -> flask.Response:
     """Displays the home page 'index.html'"""
     return render_template('index.html')
 
-@app.route('/message')
+@app.route('/message', methods=['GET', 'POST'])
 def message() -> flask.Response:
+    """requests the user's message, processes it and renders the messages page with the user's message and AI's reply"""
     user_message = request.form['message-input']
     print(user_message)
+    return render_template('message.html')
 
 @app.route('/search')
 def search() -> flask.Response:
