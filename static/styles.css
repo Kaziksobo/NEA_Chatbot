@@ -16,6 +16,13 @@ body{
 #grid-container > div {
     text-align: center;
 }
+input[type="text"] {
+    background-color: #44FF4C;
+    border-radius: 22.5px;
+    border-color: #000000;
+    border-width: 3.5px;
+    padding-left: 12px;
+}
 
 
 /* content for main div */
@@ -64,7 +71,7 @@ body{
     background-color: #FEE504;
     border-bottom-left-radius: 0px !important;
     display: grid;
-    grid-template-columns: 80% 20%;
+    grid-template-columns: 93% 7%;
     grid-template-rows: 100%;
 }
 .ai-message-icon {
@@ -97,6 +104,120 @@ body{
 }
 .ai-message-text {
     grid-column: 1;
+}
+.report-button {
+    grid-column: 2;
+    background-color: transparent;
+    background-image: url(https://static.thenounproject.com/png/1236835-200.png) !important;
+    border: none !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    padding: 0;
+    margin: 0;
+}
+.report-button:hover {
+    background-color: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+.report-button:focus {
+    background-color: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+.report-button:active {
+    background-color: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+.report-button:visited {
+    background-color: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+.vertical-alignment-helper {
+    display: table;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;}
+    
+.vertical-align-center {
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events: none;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width: inherit;
+    max-width: inherit; /* To avoid the modal window stretching full width */
+    height: inherit; /* To center horizontally */
+    margin: 0 auto;
+    pointer-events: all;
+    background-image: linear-gradient(#ffface, #fff7af);
+}
+.modal-header {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    grid-template-rows: 100%;
+    padding-top: 0;
+    margin-top: 0;
+    border: none;
+}
+.modal-title {
+    grid-column: 1;
+    padding-left: 13%;
+}
+.modal-close-button {
+    grid-column: 2;
+    background-image: url(https://icons.veryicon.com/png/o/miscellaneous/kqt/close-116.png) !important;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: none;
+}
+.modal-close-button:focus {
+    background-image: url(https://icons.veryicon.com/png/o/miscellaneous/kqt/close-116.png) !important;
+    background-color: transparent !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: contain !important;
+    border: none !important;
+}
+.modal-close-button:active {
+    background-image: url(https://icons.veryicon.com/png/o/miscellaneous/kqt/close-116.png) !important;
+    background-color: transparent !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: contain !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+.modal-close-button:hover {
+    background-image: url(https://icons.veryicon.com/png/o/miscellaneous/kqt/close-116.png) !important;
+    background-color: transparent !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: contain !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+.modal-body {
+    margin-top: 5%;
+    text-align: center;
+    margin-bottom: 7%;
+}
+.report-reason-input {
+    border-width: 2.5px !important;
+    padding: 4px;
+    width: 60%
 }
 #message-1 {
     grid-row: 9;
@@ -139,12 +260,7 @@ body{
     gap: 1vw;
 }
 #message-input {
-    background-color: #44FF4C;
-    border-radius: 22.5px;
-    border-color: #000000;
-    border-width: 3.5px;
     padding: 10px;
-    padding-left: 12px;
     font-size: 2.5vh;
 }
 #message-submit-button {
@@ -182,17 +298,12 @@ body{
     align-items: center;  
 }
 #search-bar {
-    background-color: #44FF4C;
     background-image: url(https://www.iconpacks.net/icons/2/free-search-icon-3076-thumb.png);
     background-position: 10px center;
     background-repeat: no-repeat;
     background-size: contain;
-    padding-left: 30px;
-    border-radius: 22.5px;
-    border-color: #000000;
-    border-width: 2.5px;
     padding: 4px;
-    padding-left: 60px;
+    padding-left: 40px;
     height: 3vh;
     width: 40vw;
     margin-right: 4vw;
