@@ -116,25 +116,7 @@ input[type="text"] {
     padding: 0;
     margin: 0;
 }
-.report-button:hover {
-    background-color: transparent !important;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-}
-.report-button:focus {
-    background-color: transparent !important;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-}
-.report-button:active {
-    background-color: transparent !important;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-}
-.report-button:visited {
+.report-button:hover, .report-button:focus, .report-button:active {
     background-color: transparent !important;
     border: none !important;
     outline: none !important;
@@ -181,25 +163,7 @@ input[type="text"] {
     background-size: contain;
     border: none;
 }
-.modal-close-button:focus {
-    background-image: url(https://icons.veryicon.com/png/o/miscellaneous/kqt/close-116.png) !important;
-    background-color: transparent !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    background-size: contain !important;
-    border: none !important;
-}
-.modal-close-button:active {
-    background-image: url(https://icons.veryicon.com/png/o/miscellaneous/kqt/close-116.png) !important;
-    background-color: transparent !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    background-size: contain !important;
-    border: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-}
-.modal-close-button:hover {
+.modal-close-button:focus, .modal-close-button:active, .modal-close-button:hover {
     background-image: url(https://icons.veryicon.com/png/o/miscellaneous/kqt/close-116.png) !important;
     background-color: transparent !important;
     background-repeat: no-repeat !important;
