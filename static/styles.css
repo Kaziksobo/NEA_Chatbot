@@ -225,23 +225,22 @@ input[type="text"] {
     font-size: 2.5vh;
 }
 #message-submit-button {
-    background: transparent;
+    background-image: url(https://cdn2.iconfinder.com/data/icons/font-awesome/1792/send-512.png) !important;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
     border: none;
-    margin-right: 1vw;
-}
-#message-submit-icon {
-    height: 100%;
-    width: auto;
 }
 #microphone-button {
-    background: transparent;
+    background-image: url(https://www.iconpacks.net/icons/1/free-microphone-icon-342-thumb.png) !important;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
     border: none;
     padding: 0;
     margin-left: 1vw;
-}
-#microphone-icon {
-    height: 100%;
-    width: auto;
 }
 
 
