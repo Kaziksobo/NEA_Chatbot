@@ -1,19 +1,38 @@
 import flask
 from flask import Flask, render_template, request
 
+current_theme = 'light'
+current_page = 'index.html'
+stylesheet = 'static/light-styles.css'
+
 app = Flask(__name__)
 
 @app.route('/')
 def main() -> flask.Response:
     """Displays the home page 'index.html'"""
-    return render_template('index.html')
+    global stylesheet
+    return render_template('index.html', stylesheet=stylesheet)
 
 @app.route('/message', methods=['GET', 'POST'])
 def message() -> flask.Response:
-    """requests the user's message, processes it and renders the messages page with the user's message and AI's reply"""
+    """Requests the user's message, processes it and renders the messages page with the user's message and AI's reply"""
+    global stylesheet, current_page
     user_message = request.form['message-input']
     print(user_message)
-    return render_template('message.html')
+    current_page = 'message.html'
+    return render_template('message.html', stylesheet=stylesheet)
+
+@app.route('/theme', methods=['GET', 'POST'])
+def theme_switcher() -> flask.Response:
+    """Switches the theme of the web app"""
+    global current_page, current_theme, stylesheet
+    if current_theme == 'light':
+        current_theme = 'dark'
+        stylesheet = 'static/dark-styles.css'
+    else:
+        current_theme = 'light'
+        stylesheet = 'static/light-styles.css'
+    return render_template(current_page, stylesheet=stylesheet)
 
 @app.route('/search')
 def search() -> flask.Response:
