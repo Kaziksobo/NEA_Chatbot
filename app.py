@@ -1,5 +1,6 @@
 import flask
 from flask import Flask, render_template, request
+from app_functions import reply_generator
 
 current_theme = 'light'
 current_page = 'index.html'
@@ -18,7 +19,7 @@ def message() -> flask.Response:
     """Requests the user's message, processes it and renders the messages page with the user's message and AI's reply"""
     global stylesheet, current_page
     user_message = request.form['message-input']
-    print(user_message)
+    reply = reply_generator(user_message)
     current_page = 'message.html'
     return render_template('message.html', stylesheet=stylesheet)
 
