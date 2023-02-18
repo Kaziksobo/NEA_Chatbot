@@ -1,6 +1,6 @@
 from transformers import BlenderbotTokenizer, BlenderbotForConditionalGeneration
 from csv import writer, reader
-from os import stat, path
+from os import stat, path, remove
 import torch
 
 def log_reader() -> list:
@@ -72,15 +72,25 @@ def model_generation(name: str, input_ids: torch.Tensor) -> torch.Tensor:
     print(f'Reply Ids: {result}')
     return result
 
-print(reply_generator("Do you know how to make them"))
-
-
 def log(user_message: str, bot_response: str, time_taken: float) -> None:
     """Logs the user's message, the bot response and the computation time to a CSV file"""
     file_address = 'log.csv'
+    if not path.exists(file_address):
+        create_log_file(file_address)
+    with open(file_address, 'r', encoding='utf-8', newline='') as file_object:
+        delete_csv = sum(1 for _ in file_object) == 11
+    if delete_csv:
+        remove(file_address)
+        create_log_file(file_address)
+    
     with open(file_address, 'a', encoding='utf-8', newline='') as file_object:
         csv_writer = writer(file_object)
-        # Checks if file did not already exist, and adds header if it did not
-        if stat(file_address).st_size == 0:
-            csv_writer.writerow(['User message', 'Bot response', 'Time taken'])
         csv_writer.writerow([user_message, bot_response, time_taken])
+
+def create_log_file(file_address: str) -> None:
+    """Creates the log file, adding in the header row"""
+    with open(file_address, 'w', encoding='utf-8', newline='') as file_object:
+        csv_writer = writer(file_object)
+        csv_writer.writerow(['User message', 'Bot response', 'Time taken'])
+
+log('This is a new test message', 'This is a new test response', 19.8)
