@@ -30,188 +30,46 @@
             </div>
             <div id="main">
                 <div id="messages-container">
-                    <div class="ai-message-container" id="message-1">
-                        <div class="ai-message-icon">
-                        </div>
-                        <div class="ai-message-box message-box">
-                            <p class="ai-message-text message-text">
-                                ai message 1
-                            </p>
-                            <button type="button" class="btn btn-info btn-lg report-button" data-toggle="modal" data-target="#report-modal">
-                            </button>
-                            <div class="modal fade" role="dialog" id="report-modal" tabindex="-1" aria-labelledby="report-modal-label" aria-hidden="true">
-                                <div class="vertical-alignment-helper">
-                                    <div class="modal-dialog vertical-align-center">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">
-                                                    Report message
-                                                </h4>
-                                                <button type="button" class="btn btn-default modal-close-button" data-dismiss="modal"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="/report" method="post" autocomplete="off" class="report-form">
-                                                    <input type="text" class="report-reason-input" placeholder="Enter report reason here...">
-                                                </form>
+                    {% for message in messages %}
+                        {% if message.type == 'ai' %}
+                            <div class="ai-message-container" id="{{ message.id }}">
+                                <div class="ai-message-icon">
+                                </div>
+                                <div class="ai-message-box message-box">
+                                    <p class="ai-message-text message-text">
+                                        {{ message.text }}
+                                    </p>
+                                    <button type="button" class="btn btn-info btn-lg report-button" data-toggle="modal" data-target="#report-modal">
+                                    </button>
+                                    <div class="modal fade" role="dialog" id="report-modal" tabindex="-1" aria-labelledby="report-modal-label" aria-hidden="true">
+                                        <div class="vertical-alignment-helper">
+                                            <div class="modal-dialog vertical-align-center">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">
+                                                            Report message
+                                                        </h4>
+                                                        <button type="button" class="btn btn-default modal-close-button" data-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="/report" method="post" autocomplete="off" class="report-form">
+                                                            <input type="text" class="report-reason-input" placeholder="Enter report reason here...">
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div id="message-2" class="user-message-box message-box">
-                        <p class="user-message-text message-text">
-                            user message 2
-                        </p>
-                    </div>
-                    <div class="ai-message-container" id="message-3">
-                        <div class="ai-message-icon">
-                        </div>
-                        <div class="ai-message-box message-box">
-                            <p class="ai-message-text message-text">
-                                ai message 3
-                            </p>
-                            <button type="button" class="btn btn-info btn-lg report-button" data-toggle="modal" data-target="#report-modal">
-                            </button>
-                            <div class="modal fade" role="dialog" id="report-modal" tabindex="-1" aria-labelledby="report-modal-label" aria-hidden="true">
-                                <div class="vertical-alignment-helper">
-                                    <div class="modal-dialog vertical-align-center">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">
-                                                    Report message
-                                                </h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="/report" method="post" autocomplete="off" class="report-form">
-                                                    <input type="text" class="report-reason-input" placeholder="Enter report reason here...">
-                                                    <input type="submit" class="report-submit" value="Submit">
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        {% else %}
+                            <div class="user-message-box message-box" id="{{ message.id }}">
+                                <p class="user-message-text message-text">
+                                    {{ message.text }}
+                                </p>
                             </div>
-                        </div>
-                    </div>
-                    <div id="message-4" class="user-message-box message-box">
-                        <p class="user-message-text message-text">
-                            user message 4
-                        </p>
-                    </div>
-                    <div class="ai-message-container" id="message-5">
-                        <div class="ai-message-icon">
-                        </div>
-                        <div class="ai-message-box message-box">
-                            <p class="ai-message-text message-text">
-                                ai message 5
-                            </p>
-                            <button type="button" class="btn btn-info btn-lg report-button" data-toggle="modal" data-target="#report-modal">
-                            </button>
-                            <div class="modal fade" role="dialog" id="report-modal" tabindex="-1" aria-labelledby="report-modal-label" aria-hidden="true">
-                                <div class="vertical-alignment-helper">
-                                    <div class="modal-dialog vertical-align-center">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">
-                                                    Report message
-                                                </h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="/report" method="post" autocomplete="off" class="report-form">
-                                                    <input type="text" class="report-reason-input" placeholder="Enter report reason here...">
-                                                    <input type="submit" class="report-submit" value="Submit">
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="message-6" class="user-message-box message-box">
-                        <p class="user-message-text message-text">
-                            user message 6
-                        </p>
-                    </div>
-                    <div class="ai-message-container" id="message-7">
-                        <div class="ai-message-icon">
-                        </div>
-                        <div class="ai-message-box message-box">
-                            <p class="ai-message-text message-text">
-                                ai message 7
-                            </p>
-                            <button type="button" class="btn btn-info btn-lg report-button" data-toggle="modal" data-target="#report-modal">
-                            </button>
-                            <div class="modal fade" role="dialog" id="report-modal" tabindex="-1" aria-labelledby="report-modal-label" aria-hidden="true">
-                                <div class="vertical-alignment-helper">
-                                    <div class="modal-dialog vertical-align-center">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">
-                                                    Report message
-                                                </h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="/report" method="post" autocomplete="off" class="report-form">
-                                                    <input type="text" class="report-reason-input" placeholder="Enter report reason here...">
-                                                    <input type="submit" class="report-submit" value="Submit">
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="message-8" class="user-message-box message-box">
-                        <p class="user-message-text message-text">
-                            user message 8
-                        </p>
-                    </div>
-                    <div class="ai-message-container" id="message-9">
-                        <div class="ai-message-icon">
-                        </div>
-                        <div class="ai-message-box message-box">
-                            <p class="ai-message-text message-text">
-                                ai message 9
-                            </p>
-                            <button type="button" class="btn btn-info btn-lg report-button" data-toggle="modal" data-target="#report-modal">
-                            </button>
-                            <div class="modal fade" role="dialog" id="report-modal" tabindex="-1" aria-labelledby="report-modal-label" aria-hidden="true">
-                                <div class="vertical-alignment-helper">
-                                    <div class="modal-dialog vertical-align-center">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">
-                                                    Report message
-                                                </h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="/report" method="post" autocomplete="off" class="report-form">
-                                                    <input type="text" class="report-reason-input" placeholder="Enter report reason here...">
-                                                    <input type="submit" class="report-submit" value="Submit">
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
                 <form action="/message" method="post" autocomplete="off" id="message-form">
                     <button type="submit" id="microphone-button" name="microphone-button">

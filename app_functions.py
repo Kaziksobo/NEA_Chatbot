@@ -10,8 +10,10 @@ def log_reader() -> list:
     
     # Checks if the chat history is empty
     if not path.exists('log.csv'):
+        print('No log file found')
         return None
-    
+
+    print('Log file found')
     with open('log.csv', 'r') as log_file:
         csv_reader = reader(log_file)
         chat_history = []
@@ -22,10 +24,13 @@ def log_reader() -> list:
             # Appends the first two entries in the row to the chat_history list
             chat_history.extend((row[0], row[1]))
     
+    chat_history.reverse()
+
     return chat_history
 
 
 def reply_generator(message: str) -> Union[str, float]:
+    # sourcery skip: extract-duplicate-method
     """Uses Blenderbot to generate a reply to the inputted message"""
     
     start = time()
@@ -35,6 +40,8 @@ def reply_generator(message: str) -> Union[str, float]:
 
     # Declares tokenizer
     tokenizer = BlenderbotTokenizer.from_pretrained(name)
+
+    print('Tokenizing input')
 
     # Tokenizes input
     input_ids = tokenizer.encode(
@@ -47,6 +54,7 @@ def reply_generator(message: str) -> Union[str, float]:
     print(f'Input Ids: {input_ids}')
 
     if chat_history := log_reader():
+        print('Tokenizing chat history')
         # Tokenizing chat history
         chat_history_ids = tokenizer.encode(
             chat_history,
@@ -79,6 +87,7 @@ def model_generation(name: str, input_ids: torch.Tensor) -> torch.Tensor:
     # Declares model
     model = BlenderbotForConditionalGeneration.from_pretrained(name)
     
+    print('Generating reply ids')
     # Generates Reply ids
     result = model.generate(
         input_ids, 

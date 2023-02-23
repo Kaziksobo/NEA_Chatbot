@@ -1,6 +1,6 @@
 import flask
 from flask import Flask, render_template, request
-from app_functions import reply_generator, log
+from app_functions import reply_generator, log, log_reader
 
 current_theme = 'light'
 current_page = 'index.html'
@@ -29,8 +29,16 @@ def message() -> flask.Response:
         time_taken=time
     )
     
+    chat_history = log_reader()
+    formatted_chat_history = []
+    for i in range(min(9, len(chat_history))):
+        if i % 2 == 0:
+            formatted_chat_history.append({'type': 'ai', 'text': chat_history[i], 'id': f'message-{i + 1}'})
+        else:
+            formatted_chat_history.append({'type': 'user', 'text': chat_history[i], 'id': f'message-{i + 1}'})
+    
     current_page = 'message.html'
-    return render_template('message.html', stylesheet=stylesheet)
+    return render_template('message.html', stylesheet=stylesheet, messages=formatted_chat_history)
 
 @app.route('/theme', methods=['GET', 'POST'])
 def theme_switcher() -> flask.Response:
