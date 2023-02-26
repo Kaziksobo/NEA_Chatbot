@@ -2,6 +2,7 @@ from transformers import BlenderbotTokenizer, BlenderbotForConditionalGeneration
 from csv import writer, reader
 from os import stat, path, remove
 from time import time
+from datetime import datetime
 from typing import Union
 import torch
 
@@ -99,23 +100,52 @@ def model_generation(name: str, input_ids: torch.Tensor) -> torch.Tensor:
     return result
 
 def log(user_message: str, bot_response: str, time_taken: float) -> None:
+    # sourcery skip: extract-method
     """Logs the user's message, the bot response and the computation time to a CSV file"""
     
+    # Checking if either log files do not exist
     file_address = 'log.csv'
-    if not path.exists(file_address):
-        create_log_file(file_address)
-    
+    extended_file_address = 'ext_log.csv'
+    for file in [file_address, extended_file_address]:
+        if not path.exists(file):
+            create_log_file(file)
+
+    # Checking if the main log file is full
     with open(file_address, 'r', encoding='utf-8', newline='') as file_object:
-        delete_csv = sum(1 for _ in file_object) == 11
-    if delete_csv:
-        print('Removing log file')
+        limit_reached = sum(1 for _ in file_object) == 11
+    if limit_reached:
+        print('Log file limit reached')
+
+        # Reading in all rows from original file
+        rows = []
+        with open(file_address, 'r', encoding='utf-8', newline='') as log_file:
+            csv_reader = reader(log_file)
+            rows.extend(iter(csv_reader))
+            
+        # Removing oldest message row and header row
+        rows.pop(0)
+        rows.pop(0)
         remove(file_address)
         create_log_file(file_address)
-    
+
+        # Writing older rows to new log file
+        with open(file_address, 'a', encoding='utf-8', newline='') as file_object:
+            csv_writer = writer(file_object)
+            for row in rows:
+                csv_writer.writerow(row)
+
+    # Logging new data to both log files
     print('Logging data')
-    with open(file_address, 'a', encoding='utf-8', newline='') as file_object:
+    log_time = str(datetime.now())
+    log_file_writer(user_message, bot_response, time_taken, file_address, log_time)
+    log_file_writer(user_message, bot_response, time_taken, extended_file_address, log_time)
+        
+def log_file_writer(user_message: str, bot_response: str, time_taken: str, file_address: str, log_time:str) -> None:
+    """Logs data to any log file"""
+    
+    with open(file=file_address, mode='a', encoding='utf-8', newline='') as file_object:
         csv_writer = writer(file_object)
-        csv_writer.writerow([user_message, bot_response, time_taken])
+        csv_writer.writerow([user_message, bot_response, time_taken, log_time])
 
 def create_log_file(file_address: str) -> None:
     """Creates the log file, adding in the header row"""
@@ -123,4 +153,4 @@ def create_log_file(file_address: str) -> None:
     print('Creating new log file')
     with open(file_address, 'w', encoding='utf-8', newline='') as file_object:
         csv_writer = writer(file_object)
-        csv_writer.writerow(['User message', 'Bot response', 'Time taken'])
+        csv_writer.writerow(['User message', 'Bot response', 'Time taken', 'Log time'])
