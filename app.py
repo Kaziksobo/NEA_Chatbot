@@ -5,6 +5,7 @@ from app_functions import reply_generator, log, log_reader
 current_theme = 'light'
 current_page = 'index.html'
 stylesheet = 'static/light-styles.css'
+formatted_chat_history = []
 
 app = Flask(__name__)
 
@@ -19,7 +20,7 @@ def main() -> flask.Response:
 def message() -> flask.Response:
     """Requests the user's message, processes it and renders the messages page with the user's message and AI's reply"""
     
-    global stylesheet, current_page
+    global stylesheet, current_page, formatted_chat_history
     
     user_message = request.form['message-input']
     reply, time = reply_generator(user_message)
@@ -44,7 +45,7 @@ def message() -> flask.Response:
 def theme_switcher() -> flask.Response:
     """Switches the theme of the web app"""
     
-    global current_page, current_theme, stylesheet
+    global current_page, current_theme, stylesheet, formatted_chat_history
     
     if current_theme == 'light':
         current_theme = 'dark'
@@ -52,7 +53,10 @@ def theme_switcher() -> flask.Response:
     else:
         current_theme = 'light'
         stylesheet = 'static/light-styles.css'
-    return render_template(current_page, stylesheet=stylesheet)
+    if current_page == 'message.html': 
+        return render_template(current_page, stylesheet=stylesheet, messages=formatted_chat_history)
+    else:
+        return render_template(current_page, stylesheet=stylesheet)
 
 @app.route('/search')
 def search() -> flask.Response:
