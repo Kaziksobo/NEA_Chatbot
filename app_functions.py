@@ -1,6 +1,6 @@
 from transformers import BlenderbotTokenizer, BlenderbotForConditionalGeneration
 from csv import writer, reader
-from os import stat, path, remove
+from os import path, remove
 from time import time
 from datetime import datetime
 from typing import Union
