@@ -6,16 +6,18 @@ from datetime import datetime
 from typing import Union
 import torch
 
-def log_reader() -> list:
-    """Reads the contents of the log file into a single list, ignoring the time taken column"""
+def log_reader(file_address: str, format: bool=False, len_limit: bool=False) -> list:
+    """Reads the contents of the log file into a single list, ignoring the time taken and log time columns.\n
+    Also has the option of formatting the chat history, turning each message into a dictionary,
+    specifying if the message came from the model or the user"""
     
     # Checks if the chat history is empty
-    if not path.exists('log.csv'):
+    if not path.exists(file_address):
         print('No log file found')
         return None
 
     print('Log file found')
-    with open('log.csv', 'r') as log_file:
+    with open(file_address, 'r') as log_file:
         csv_reader = reader(log_file)
         chat_history = []
         for row in csv_reader:
@@ -26,9 +28,33 @@ def log_reader() -> list:
             chat_history.extend((row[0], row[1]))
     
     chat_history.reverse()
+    
+    if format:
+        formatted_chat_history = []
+        if len_limit:
+            for i in range(min(9, len(chat_history))):
+                if i % 2 == 0:
+                    formatted_chat_history.append({'type': 'ai', 'text': chat_history[i]})
+                else:
+                    formatted_chat_history.append({'type': 'user', 'text': chat_history[i]})
+        else:
+            for i in range(len(chat_history)):
+                if i % 2 == 0:
+                    formatted_chat_history.append({'type': 'ai', 'text': chat_history[i]})
+                else:
+                    formatted_chat_history.append({'type': 'user', 'text': chat_history[i]})
 
+        return formatted_chat_history
+    
     return chat_history
 
+def message_id_generator(chat_history: list) -> list:
+    """Adds IDs to each message based on their location in the list"""
+    
+    for i in range(len(chat_history)):
+        chat_history[i]['id'] = f'message-{i + 1}'
+    
+    return chat_history
 
 def reply_generator(message: str) -> Union[str, float]:
     # sourcery skip: extract-duplicate-method
@@ -54,7 +80,7 @@ def reply_generator(message: str) -> Union[str, float]:
 
     print(f'Input Ids: {input_ids}')
 
-    if chat_history := log_reader():
+    if chat_history := log_reader('log.csv'):
         print('Tokenizing chat history')
         # Tokenizing chat history
         chat_history_ids = tokenizer.encode(
