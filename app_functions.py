@@ -4,7 +4,7 @@ from os import path, remove
 from time import time
 from datetime import datetime
 from typing import Union
-import torch
+import torch, re
 
 def log_reader(file_address: str, format: bool=False, len_limit: bool=False) -> list:
     """Reads the contents of the log file into a single list, ignoring the time taken and log time columns.\n
@@ -111,6 +111,7 @@ def reply_generator(message: str) -> Union[str, float]:
 
 def model_generation(name: str, input_ids: torch.Tensor) -> torch.Tensor:
     """Generates response sequence using an already tokenized input"""
+    
     # Declares model
     model = BlenderbotForConditionalGeneration.from_pretrained(name)
     
@@ -126,8 +127,10 @@ def model_generation(name: str, input_ids: torch.Tensor) -> torch.Tensor:
     return result
 
 def format_message(message: str) -> str:
-    """Formats generated message to capitalise and remove whitespace"""
+    """Formats message to capitalise and remove whitespace and fix some grammar errors"""
+    
     message = message.strip()
+    message = re.sub(r'\s(?=[\.,:;])', "", message)
     return message.capitalize()
 
 def log(user_message: str, bot_response: str, time_taken: float) -> None:
@@ -185,3 +188,23 @@ def create_log_file(file_address: str) -> None:
     with open(file_address, 'w', encoding='utf-8', newline='') as file_object:
         csv_writer = writer(file_object)
         csv_writer.writerow(['User message', 'Bot response', 'Time taken', 'Log time'])
+
+def message_selector(length: int, location: int) -> int:
+    """selects the messages to be displayed when a message is searched for, 
+    based off the length of the chat history"""
+    
+    messages_before = 0
+    messages_after = 0
+    messages_after_query = length - (location + 1)
+    messages_before_query = length - (messages_after_query + 1)
+    if messages_after_query > 3 and messages_before_query > 3:
+        messages_after = 4
+        messages_before = 4
+    elif messages_after_query < 4 and messages_before_query > 3:
+        messages_after = messages_after_query
+        messages_before = 8 - messages_after
+    elif messages_after_query > 3 and messages_before_query < 4:
+        messages_before = messages_before_query
+        messages_after = 8 - messages_before
+    
+    return messages_before, messages_after
