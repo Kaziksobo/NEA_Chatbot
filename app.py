@@ -89,7 +89,6 @@ def search() -> flask.Response:
     messages_before, messages_after = message_selector(len(history), location)
     
     messages_to_display = [history[i] for i in range((location + (messages_after)), (location - (messages_before + 1)), -1)]
-    print(f'messages_to_display - {messages_to_display}')
     messages_to_display = message_id_generator(messages_to_display)
     
     current_page = 'search_result.html'
