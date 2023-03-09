@@ -42,6 +42,18 @@ input[type="text"] {
     grid-template-rows: 81.5vh 8.5vh;
     gap: 1vh;
 }
+#main-result {
+    grid-column: 2 / 4;
+    grid-row: 2 / 4;
+    border-right: 0;
+    border-bottom: 0;
+    border-top: .25vw solid #000000;
+    border-left: .25vw solid #000000;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 5vh 85vh;
+    gap: 1vh;
+}
 
 #messages-container {
     grid-row: 1;
@@ -50,6 +62,60 @@ input[type="text"] {
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: repeat(6, 11%);
+}
+#messages-container-result {
+    grid-row: 2;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: repeat(6, 11%);
+    margin-bottom: 2.5vh;
+}
+#error-container {
+    grid-row: 2;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 47.5% 47.5%;
+    gap: 5%;
+}
+#error-icon {
+    background-image: url(light-images/error.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    grid-row: 1;
+}
+#error-message {
+    grid-row: 2;
+    font-size: 2.5vh;
+}
+#back {
+    grid-row: 1;
+    border: none;
+    text-align: center;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+#back-button {
+    border: none;
+    background-image: url(light-images/back-icon.png);
+    background-position: 10px center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    padding: 4px;
+    padding-left: 50px;
+    height: 3vh;
+    width: 13vw;
+    font-size: 2.3vh;
+    box-sizing: content-box;
+    margin-top: 1vh;
+    white-space: nowrap;
 }
 .message-box {
     border: 3px solid #000000;
