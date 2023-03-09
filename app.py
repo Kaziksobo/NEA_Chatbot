@@ -91,6 +91,12 @@ def search() -> flask.Response:
     messages_to_display = [history[i] for i in range((location + (messages_after)), (location - (messages_before + 1)), -1)]
     messages_to_display = message_id_generator(messages_to_display)
     
+    for message in messages_to_display:
+        if message['text'] == query_message:
+            message['class'] = 'query-message-box'
+        else:
+            message['class'] = False
+    
     current_page = 'search_result.html'
     return render_template(current_page, stylesheet=stylesheet, messages=messages_to_display)
 
