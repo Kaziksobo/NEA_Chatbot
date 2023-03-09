@@ -77,8 +77,6 @@ def search() -> flask.Response:
     
     history.reverse()
     
-    print(history)
-    
     for message_info in history:
         if message_info['text'] == query_message:
             print(f'Found message - {message_info}')
@@ -91,12 +89,16 @@ def search() -> flask.Response:
     messages_before = 0
     messages_after = 0
     messages_after_query = len(history) - (location + 1)
-    if messages_after_query > 3:
+    messages_before_query = len(history) - (messages_after_query + 1)
+    if messages_after_query > 3 and messages_before_query > 3:
         messages_after = 4
         messages_before = 4
-    else:
+    elif messages_after_query < 4 and messages_before_query > 3:
         messages_after = messages_after_query
         messages_before = 8 - messages_after
+    elif messages_after_query > 3 and messages_before_query < 4:
+        messages_before = messages_before_query
+        messages_after = 8 - messages_before
     
     messages_to_display = [history[i] for i in range((location + (messages_after)), (location - (messages_before + 1)), -1)]
     print(f'messages_to_display - {messages_to_display}')
