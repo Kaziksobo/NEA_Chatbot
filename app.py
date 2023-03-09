@@ -1,6 +1,7 @@
 import flask
 from flask import Flask, render_template, request
-from app_functions import reply_generator, log, log_reader, message_id_generator, format_message, message_selector
+from os import remove
+from app_functions import reply_generator, log, log_reader, message_id_generator, format_message, message_selector, create_log_file
 
 current_theme = 'light'
 current_page = 'index.html'
@@ -13,9 +14,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def main() -> flask.Response:
-    """Displays the home page 'index.html'"""
+    """Displays the home page 'index.html' and clears temp logs"""
     
     global stylesheet
+    
+    remove('log.csv')
+    create_log_file('log.csv')
+    
     return render_template('index.html', stylesheet=stylesheet)
 
 @app.route('/message', methods=['GET', 'POST'])
