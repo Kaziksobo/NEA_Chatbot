@@ -28,8 +28,15 @@
                     </datalist>
                 </form>
             </div>
-            <div id="main">
-                <div id="messages-container">
+            <div id="main-result">
+                <div id="back">
+                    <form action="/back" id="back-form" method="post">
+                        <button type="submit" id="back-button">
+                            Return to message page
+                        </button>
+                    </form>
+                </div>
+                <div id="messages-container-result">
                     {% for message in messages %}
                         {% if message.type == 'ai' %}
                             <div class="ai-message-container" id="{{ message.id }}">
@@ -71,13 +78,6 @@
                         {% endif %}
                     {% endfor %}
                 </div>
-                <form action="/message" method="post" autocomplete="off" id="message-form">
-                    <button type="submit" id="microphone-button" name="microphone-button">
-                    </button>
-                    <input type="text" id="message-input" name="message-input" placeholder="Enter message here...">
-                    <button type="submit" id="message-submit-button">
-                    </button>
-                </form>
             </div>
             <div id="settings">
                 <form action="/theme" id="colour-mode-form" method="post">
