@@ -107,7 +107,7 @@ def reply_generator(message: str) -> Union[str, float]:
     print(f'Response: {reply}')
     end = time()
     
-    return reply, round((end - start), 2)
+    return format(message), round((end - start), 2)
 
 def model_generation(name: str, input_ids: torch.Tensor) -> torch.Tensor:
     """Generates response sequence using an already tokenized input"""
@@ -124,6 +124,11 @@ def model_generation(name: str, input_ids: torch.Tensor) -> torch.Tensor:
     print(f'Reply Ids: {result}')
     
     return result
+
+def format_message(message: str) -> str:
+    """Formats generated message to capitalise and remove whitespace"""
+    message = message.strip()
+    return message.capitalize()
 
 def log(user_message: str, bot_response: str, time_taken: float) -> None:
     # sourcery skip: extract-method
