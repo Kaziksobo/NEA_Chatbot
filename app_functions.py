@@ -107,7 +107,7 @@ def reply_generator(message: str) -> Union[str, float]:
     print(f'Response: {reply}')
     end = time()
     
-    return format(message), round((end - start), 2)
+    return format(reply), round((end - start), 2)
 
 def model_generation(name: str, input_ids: torch.Tensor) -> torch.Tensor:
     """Generates response sequence using an already tokenized input"""
