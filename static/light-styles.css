@@ -157,6 +157,9 @@ input[type="text"] {
     margin: auto 0 0 auto;
     border-bottom-right-radius: 0px !important;
 }
+.query-message-box {
+    background: #ff6bc6 !important;
+}
 .message-text {
     margin: 0;
     margin-left: 2% !important;
