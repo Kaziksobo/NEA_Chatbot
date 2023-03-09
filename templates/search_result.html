@@ -42,7 +42,7 @@
                             <div class="ai-message-container" id="{{ message.id }}">
                                 <div class="ai-message-icon">
                                 </div>
-                                <div class="ai-message-box message-box">
+                                <div class="ai-message-box message-box {{ message.class }}">
                                     <p class="ai-message-text message-text">
                                         {{ message.text }}
                                     </p>
@@ -70,7 +70,7 @@
                                 </div>
                             </div>
                         {% else %}
-                            <div class="user-message-box message-box" id="{{ message.id }}">
+                            <div class="user-message-box message-box {{ message.class }}" id="{{ message.id }}">
                                 <p class="user-message-text message-text">
                                     {{ message.text }}
                                 </p>
