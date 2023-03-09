@@ -1,6 +1,6 @@
 import flask
 from flask import Flask, render_template, request
-from app_functions import reply_generator, log, log_reader, message_id_generator, format_message
+from app_functions import reply_generator, log, log_reader, message_id_generator, format_message, message_selector
 
 current_theme = 'light'
 current_page = 'index.html'
@@ -86,19 +86,7 @@ def search() -> flask.Response:
         current_page = 'search_error.html'
         return render_template(current_page, stylesheet=stylesheet, message=query_message)
     
-    messages_before = 0
-    messages_after = 0
-    messages_after_query = len(history) - (location + 1)
-    messages_before_query = len(history) - (messages_after_query + 1)
-    if messages_after_query > 3 and messages_before_query > 3:
-        messages_after = 4
-        messages_before = 4
-    elif messages_after_query < 4 and messages_before_query > 3:
-        messages_after = messages_after_query
-        messages_before = 8 - messages_after
-    elif messages_after_query > 3 and messages_before_query < 4:
-        messages_before = messages_before_query
-        messages_after = 8 - messages_before
+    messages_before, messages_after = message_selector(len(history), location)
     
     messages_to_display = [history[i] for i in range((location + (messages_after)), (location - (messages_before + 1)), -1)]
     print(f'messages_to_display - {messages_to_display}')
