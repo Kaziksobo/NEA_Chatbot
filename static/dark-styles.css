@@ -73,7 +73,7 @@ input[type="text"] {
     grid-template-rows: repeat(6, 11%);
     margin-bottom: 2.5vh;
 }
-#error-container {
+#error-container, #report-container {
     grid-row: 2;
     margin-left: 1vw;
     margin-right: 1vw;
@@ -90,7 +90,15 @@ input[type="text"] {
     background-color: transparent;
     grid-row: 1;
 }
-#error-message {
+#report-icon {
+    background-image: url(dark-images/post-report.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    grid-row: 1;
+}
+#error-message, #report-message {
     grid-row: 2;
     font-size: 2.5vh;
 }
