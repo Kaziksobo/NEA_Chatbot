@@ -4,7 +4,7 @@ from os import path, remove
 from time import time
 from datetime import datetime
 from typing import Union
-import torch, re
+import torch, re, nltk.data
 
 def log_reader(file_address: str, format: bool=False, len_limit: bool=False) -> list:
     """Reads the contents of the log file into a single list, ignoring the time taken and log time columns.\n
@@ -131,7 +131,11 @@ def format_message(message: str) -> str:
     
     message = message.strip()
     message = re.sub(r'\s(?=[\.,:;])', "", message)
-    return message.capitalize()
+    sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
+    sentences = sent_tokenizer.tokenize(message)
+    sentences = [sent.capitalize() for sent in sentences]
+    message = ' '.join(sentences)
+    return message
 
 def log(user_message: str, bot_response: str, time_taken: float) -> None:
     # sourcery skip: extract-method
