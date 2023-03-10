@@ -181,7 +181,7 @@ def log(user_message: str, bot_response: str, time_taken: float) -> None:
 def log_file_writer(user_message: str, bot_response: str, time_taken: str, file_address: str, log_time:str) -> None:
     """Logs data to any log file"""
     
-    with open(file=file_address, mode='a', encoding='utf-8', newline='') as file_object:
+    with open(file_address, 'a', encoding='utf-8', newline='') as file_object:
         csv_writer = writer(file_object)
         csv_writer.writerow([user_message, bot_response, time_taken, log_time])
 
@@ -192,6 +192,24 @@ def create_log_file(file_address: str) -> None:
     with open(file_address, 'w', encoding='utf-8', newline='') as file_object:
         csv_writer = writer(file_object)
         csv_writer.writerow(['User message', 'Bot response', 'Time taken', 'Log time'])
+
+def log_report(user_message: str, bot_response: str, report_reason: str):
+    """Saves reported response, user's message and report reason to a CSV file"""
+    
+    if not path.exists('report.csv'):
+        create_report_file()
+    
+    with open('report.csv', 'a', encoding='utf-8', newline='') as file_object:
+        csv_writer = writer(file_object)
+        csv_writer.writerow([user_message, bot_response, report_reason])
+
+def create_report_file() -> None:
+    """Creates report file, adding in the header row"""
+    
+    print('Creating report file')
+    with open('report.csv', 'w', encoding='utf-8', newline='') as file_object:
+        csv_writer = writer(file_object)
+        csv_writer.writerow(['User message', 'Bot response', 'Report reason'])
 
 def message_selector(length: int, location: int) -> int:
     """selects the messages to be displayed when a message is searched for, 
