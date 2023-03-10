@@ -230,3 +230,11 @@ def message_selector(length: int, location: int) -> int:
         messages_after = 8 - messages_before
     
     return messages_before, messages_after
+
+def get_messages_list() -> list:
+    """Returns a list of individual messages"""
+    
+    history = log_reader('ext_log.csv', format=True)
+    history.reverse()
+
+    return [message['text'] for message in history]

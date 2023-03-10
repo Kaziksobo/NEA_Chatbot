@@ -1,7 +1,7 @@
 import flask
 from flask import Flask, render_template, request
 from os import remove
-from app_functions import reply_generator, log, log_reader, message_id_generator, format_message, message_selector, create_log_file, log_report
+from app_functions import reply_generator, log, log_reader, message_id_generator, format_message, message_selector, create_log_file, log_report, get_messages_list
 
 current_theme = 'light'
 current_page = 'index.html'
@@ -22,7 +22,7 @@ def main() -> flask.Response:
     remove('log.csv')
     create_log_file('log.csv')
     
-    return render_template('index.html', stylesheet=stylesheet)
+    return render_template('index.html', stylesheet=stylesheet, messages_list=get_messages_list())
 
 @app.route('/message', methods=['GET', 'POST'])
 def message() -> flask.Response:
@@ -43,7 +43,7 @@ def message() -> flask.Response:
     chat_history = message_id_generator(chat_history)
     
     current_page = 'message.html'
-    return render_template('message.html', stylesheet=stylesheet, messages=chat_history)
+    return render_template('message.html', stylesheet=stylesheet, messages=chat_history, messages_list=get_messages_list())
 
 @app.route('/theme', methods=['GET', 'POST'])
 def theme_switcher() -> flask.Response:
@@ -59,15 +59,15 @@ def theme_switcher() -> flask.Response:
         stylesheet = 'static/light-styles.css'
     
     if current_page == 'message.html': 
-        return render_template(current_page, stylesheet=stylesheet, messages=chat_history)
+        return render_template(current_page, stylesheet=stylesheet, messages=chat_history, messages_list=get_messages_list())
     elif current_page == 'search_result.html':
-        return render_template(current_page, stylesheet=stylesheet, messages=messages_to_display)
+        return render_template(current_page, stylesheet=stylesheet, messages=messages_to_display, messages_list=get_messages_list())
     elif current_page == 'search_error.html':
-        return render_template(current_page, stylesheet=stylesheet, message=query_message)
+        return render_template(current_page, stylesheet=stylesheet, message=query_message, messages_list=get_messages_list())
     elif current_page == 'report.html':
-        return render_template(current_page, stylesheet=stylesheet, message=reported_message)
+        return render_template(current_page, stylesheet=stylesheet, message=reported_message, messages_list=get_messages_list())
     else:
-        return render_template(current_page, stylesheet=stylesheet)
+        return render_template(current_page, stylesheet=stylesheet, messages_list=get_messages_list())
 
 @app.route('/search', methods=['GET', 'POST'])
 def search() -> flask.Response:
@@ -106,7 +106,7 @@ def search() -> flask.Response:
             message['class'] = False
     
     current_page = 'search_result.html'
-    return render_template(current_page, stylesheet=stylesheet, messages=messages_to_display)
+    return render_template(current_page, stylesheet=stylesheet, messages=messages_to_display, messages_list=get_messages_list())
 
 @app.route('/back', methods=['GET', 'POST'])
 def back() -> flask.Response:
@@ -115,7 +115,7 @@ def back() -> flask.Response:
     global chat_history, current_page, stylesheet
     
     current_page = 'message.html'
-    return render_template(current_page, stylesheet=stylesheet, messages=chat_history)
+    return render_template(current_page, stylesheet=stylesheet, messages=chat_history, messages_list=get_messages_list())
 
 @app.route('/report', methods=['GET', 'POST'])
 def report() -> flask.Response:
@@ -143,7 +143,7 @@ def report() -> flask.Response:
     log_report(reported_message, bot_response, report_reason)
     
     current_page = 'report.html'
-    return render_template(current_page, stylesheet=stylesheet, message=reported_message)
+    return render_template(current_page, stylesheet=stylesheet, message=reported_message, messages_list=get_messages_list())
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000, host='0.0.0.0')
