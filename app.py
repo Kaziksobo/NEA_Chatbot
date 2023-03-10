@@ -1,7 +1,7 @@
 import flask
 from flask import Flask, render_template, request
 from os import remove
-from app_functions import reply_generator, log, log_reader, message_id_generator, format_message, message_selector, create_log_file
+from app_functions import reply_generator, log, log_reader, message_id_generator, format_message, message_selector, create_log_file, log_report
 
 current_theme = 'light'
 current_page = 'index.html'
@@ -9,6 +9,7 @@ stylesheet = 'static/light-styles.css'
 chat_history = []
 messages_to_display = []
 query_message = ''
+reported_message = ''
 
 app = Flask(__name__)
 
@@ -48,7 +49,7 @@ def message() -> flask.Response:
 def theme_switcher() -> flask.Response:
     """Switches the theme of the web app"""
     
-    global current_page, current_theme, stylesheet, chat_history, query_message
+    global current_page, current_theme, stylesheet, chat_history, query_message, reported_message
     
     if current_theme == 'light':
         current_theme = 'dark'
@@ -63,6 +64,8 @@ def theme_switcher() -> flask.Response:
         return render_template(current_page, stylesheet=stylesheet, messages=messages_to_display)
     elif current_page == 'search_error.html':
         return render_template(current_page, stylesheet=stylesheet, message=query_message)
+    elif current_page == 'report.html':
+        return render_template(current_page, stylesheet=stylesheet, message=reported_message)
     else:
         return render_template(current_page, stylesheet=stylesheet)
 
@@ -107,12 +110,40 @@ def search() -> flask.Response:
 
 @app.route('/back', methods=['GET', 'POST'])
 def back() -> flask.Response:
-    """Renders message page when back button on search results page clicked"""
+    """Renders the message page when back button on search results page clicked"""
     
     global chat_history, current_page, stylesheet
     
     current_page = 'message.html'
     return render_template(current_page, stylesheet=stylesheet, messages=chat_history)
+
+@app.route('/report', methods=['GET', 'POST'])
+def report() -> flask.Response:
+    """Logs the report and renders report page"""
+    
+    global stylesheet, chat_history, current_page, reported_message
+    
+    
+    reported_message = list(request.form.to_dict().keys())[0]
+    report_reason = request.form[reported_message]
+    report_message = reported_message.replace('report-', '')
+    
+    print(report_message)
+    
+    for message in chat_history:
+        if message['id'] == report_message:
+            location = chat_history.index(message)
+            bot_response = message['text']
+    reported_message = chat_history[location - 1]['text']
+    
+    print(f'User message - {reported_message}')
+    print(f'Bot response - {bot_response}')
+    print(f'Report reason - {report_reason}')
+    
+    log_report(reported_message, bot_response, report_reason)
+    
+    current_page = 'report.html'
+    return render_template(current_page, stylesheet=stylesheet, message=reported_message)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000, host='0.0.0.0')
