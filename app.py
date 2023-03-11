@@ -17,11 +17,24 @@ app = Flask(__name__)
 def main() -> flask.Response:
     """Displays the home page 'index.html' and clears temp logs"""
     
-    global stylesheet
+    global stylesheet, current_page
     
     remove('log.csv')
     create_log_file('log.csv')
     
+    current_page = 'index.html'
+    return render_template('index.html', stylesheet=stylesheet, messages_list=get_messages_list())
+
+@app.route('/home', methods=['GET', 'POST'])
+def home() -> flask.Response:
+    """Displayes the home page 'index.html' and clears temp logs"""
+    
+    global stylesheet, current_page
+    
+    remove('log.csv')
+    create_log_file('log.csv')
+    
+    current_page = 'index.html'
     return render_template('index.html', stylesheet=stylesheet, messages_list=get_messages_list())
 
 @app.route('/message', methods=['GET', 'POST'])

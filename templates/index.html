@@ -11,12 +11,14 @@
     <body>
         <div id="grid-container">
             <div id="sidebar">
-                <div id="chatbot-select">
-                    <img src="../static/chatbot-icon.png" id="chatbot-icon">
-                    <p id="chatbot-name">
-                        Chatbot
-                    </p>
-                </div>
+                <form action="/home" id="chatbot-form" method="post">
+                    <button type="submit" id="chatbot-select">
+                        <img src="../static/chatbot-icon.png" id="chatbot-icon">
+                        <p id="chatbot-name">
+                            Chatbot
+                        </p>
+                    </button>
+                </form>
             </div>
             <div id="header">
                 <form action="/search" method="post" autocomplete="off" id="search-form">
