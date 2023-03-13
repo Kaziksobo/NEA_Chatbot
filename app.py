@@ -144,12 +144,12 @@ def report() -> flask.Response:
         if message['id'] == report_message:
             location = chat_history.index(message)
             bot_response = message['text']
-    reported_message = chat_history[location - 1]['text']
+    user_message = chat_history[location - 1]['text']
     
-    log_report(reported_message, bot_response, report_reason)
+    log_report(user_message, bot_response, report_reason)
     
     current_page = 'report.html'
-    return render_template(current_page, stylesheet=stylesheet, message=reported_message, messages_list=get_messages_list())
+    return render_template(current_page, stylesheet=stylesheet, message=bot_response, messages_list=get_messages_list())
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000, host='0.0.0.0')
