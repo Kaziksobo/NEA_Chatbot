@@ -136,22 +136,15 @@ def report() -> flask.Response:
     
     global stylesheet, chat_history, current_page, reported_message
     
-    
     reported_message = list(request.form.to_dict().keys())[0]
     report_reason = request.form[reported_message]
     report_message = reported_message.replace('report-', '')
-    
-    print(report_message)
     
     for message in chat_history:
         if message['id'] == report_message:
             location = chat_history.index(message)
             bot_response = message['text']
     reported_message = chat_history[location - 1]['text']
-    
-    print(f'User message - {reported_message}')
-    print(f'Bot response - {bot_response}')
-    print(f'Report reason - {report_reason}')
     
     log_report(reported_message, bot_response, report_reason)
     
