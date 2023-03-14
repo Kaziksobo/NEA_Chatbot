@@ -129,8 +129,8 @@ def model_generation(name: str, input_ids: torch.Tensor) -> torch.Tensor:
 def format_message(message: str) -> str:
     """Formats message to capitalise and remove whitespace and fix some grammar errors"""
     
-    message = message.strip()
     message = re.sub(r'\s(?=[\.,:;])', "", message)
+    message = message.strip()
     sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
     sentences = sent_tokenizer.tokenize(message)
     sentences = [sent.capitalize() for sent in sentences]
