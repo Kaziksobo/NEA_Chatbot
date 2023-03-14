@@ -27,8 +27,12 @@ input[type="text"] {
 ::placeholder {
     color: #000;
 }
+ul {
+    text-align: center;
+    list-style-position: inside;
+  }
 
-
+  
 /* content for main div */
 
 #main {
@@ -56,6 +60,27 @@ input[type="text"] {
     gap: 1vh;
 }
 
+#warnings {
+    grid-row: 1;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 47.5% 47.5%;
+    gap: 5%;
+}
+#warning-icon {
+    background-image: url(light-images/info.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: transparent;
+    grid-row: 1;
+}
+#warning-message {
+    grid-row: 2;
+    font-size: 2.5vh;
+}
 #messages-container {
     grid-row: 1;
     margin-left: 1vw;
