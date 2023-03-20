@@ -1,10 +1,13 @@
-from transformers import BlenderbotTokenizer, BlenderbotForConditionalGeneration
+from transformers import BlenderbotTokenizer, BlenderbotForConditionalGeneration, Wav2Vec2ForCTC, Wav2Vec2Processor
 from csv import writer, reader
 from os import path, remove
 from time import time
 from datetime import datetime
 from typing import Union
 import torch, re, nltk.data
+import sounddevice as sd
+import soundfile as sf
+import numpy as np
 
 def log_reader(file_address: str, format: bool=False, len_limit: bool=False) -> list:
     """Reads the contents of the log file into a single list, ignoring the time taken and log time columns.\n
@@ -238,3 +241,51 @@ def get_messages_list() -> list:
     history.reverse()
 
     return [message['text'] for message in history]
+
+def record_message() -> None:
+    """Records all audio from microphone for 5 seconds"""
+    
+    sample_rate = 16000
+    duration = 2
+    file_name = r'temp_audio.wav'
+
+    print('recording')
+    my_data = sd.rec(int(sample_rate * duration), samplerate=sample_rate, channels=2)
+    sd.wait()
+    print('recording ended')
+    sf.write(file_name, my_data, sample_rate)
+
+def load_data(input_file: str) -> np.ndarray:
+    """Loads speech data from audio file"""
+
+    speech, sample_rate = sf.read(input_file)
+    return speech
+
+
+def asr_transcribe():
+    """Uses pre-trained Wav2Vec transformer for automatic speech recognition on given audio file"""
+    
+    file_name = r"C:\Users\kazik\Downloads\f2bjrop1.0.wav"
+    model_name = "facebook/wav2vec2-base-960h"
+    model = Wav2Vec2ForCTC.from_pretrained(model_name)
+    processor = Wav2Vec2Processor.from_pretrained(model_name)
+
+    speech = load_data(file_name)
+    print('Loaded speech file')
+    # Tokenize
+    input_values = processor(speech, return_tensors="pt").input_values
+    print('Processed input values')
+    # Take logits
+    logits = model(input_values).logits
+    print('Processed logits')
+    # Take argmax
+    predicted_ids = torch.argmax(logits, dim=-1)
+    # Get the words from predicted word ids
+    transcription = processor.decode(predicted_ids[0])
+    print('Decoded transcription')
+    # Correcting the letter casing
+    transcription = format_message(transcription)
+    
+    print(f'Transcription: {transcription}')
+    
+    return transcription
