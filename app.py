@@ -1,7 +1,18 @@
 import flask
 from flask import Flask, render_template, request
 from os import remove
-from app_functions import reply_generator, log, log_reader, message_id_generator, format_message, message_selector, create_log_file, log_report, get_messages_list
+from app_functions import (
+    reply_generator, 
+    log, log_reader, 
+    message_id_generator, 
+    format_message, 
+    message_selector, 
+    create_log_file, 
+    log_report, 
+    get_messages_list,
+    record_message,
+    asr_transcribe
+)
 
 current_theme = 'light'
 current_page = 'index.html'
@@ -43,18 +54,23 @@ def message() -> flask.Response:
     
     global stylesheet, current_page, chat_history
     
-    user_message = request.form['message-input']
-    user_message = format_message(user_message)
+    if request.form.to_dict()['message-input'] == '':
+        record_message()
+        user_message = asr_transcribe()
+    else:
+        user_message = request.form['message-input']
+        user_message = format_message(user_message)
+    
     reply, time = reply_generator(user_message)
     log(
         user_message=user_message,
         bot_response=reply,
         time_taken=time
     )
-    
+
     chat_history = log_reader('log.csv', format=True, len_limit=True)
     chat_history = message_id_generator(chat_history)
-    
+
     current_page = 'message.html'
     return render_template('message.html', stylesheet=stylesheet, messages=chat_history, messages_list=get_messages_list())
 
