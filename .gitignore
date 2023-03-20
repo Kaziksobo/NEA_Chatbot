@@ -1,5 +1,6 @@
 /venv
-/log.csv
-/ext_log.csv
+log.csv
+ext_log.csv
 /__pycache__
-/report.csv
+report.csv
+temp_audio.wav
