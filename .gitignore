@@ -4,3 +4,5 @@ ext_log.csv
 /__pycache__
 report.csv
 temp_audio.wav
+/model
+/tokenizer
