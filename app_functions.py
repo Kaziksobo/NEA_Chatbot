@@ -69,7 +69,7 @@ def reply_generator(message: str) -> Union[str, float]:
     print(f'Input sequence: {message}')
 
     # Declares tokenizer
-    tokenizer = BlenderbotTokenizer.from_pretrained(name)
+    tokenizer = BlenderbotTokenizer.from_pretrained(name, cache_dir='/tokenizer')
 
     print('Tokenizing input')
 
@@ -116,7 +116,7 @@ def model_generation(name: str, input_ids: torch.Tensor) -> torch.Tensor:
     """Generates response sequence using an already tokenized input"""
     
     # Declares model
-    model = BlenderbotForConditionalGeneration.from_pretrained(name)
+    model = BlenderbotForConditionalGeneration.from_pretrained(name, cache_dir='/model')
     
     print('Generating reply ids')
     # Generates Reply ids
