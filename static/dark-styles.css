@@ -28,14 +28,17 @@ input[type="text"] {
     color: #FFF;
 }
 ul {
+    /* Centring text and bullet points */
     text-align: center;
     list-style-position: inside;
   }
 
 
 
-/* content for main div */
+/* Content for main div */
+/* Divs labelled '-result' are in search_result.html, search_error.html, report.html */
 
+/* Main div for index.html and message.html */
 #main {
     grid-column: 2 / 4;
     grid-row: 2 / 4;
@@ -61,6 +64,7 @@ ul {
     gap: 1vh;
 }
 
+/* Warnings - index page */
 #warnings {
     grid-row: 1;
     margin-left: 1vw;
@@ -82,6 +86,8 @@ ul {
     grid-row: 2;
     font-size: 2.5vh;
 }
+
+
 #messages-container {
     grid-row: 1;
     margin-left: 1vw;
@@ -99,6 +105,7 @@ ul {
     grid-template-rows: repeat(6, 11%);
     margin-bottom: 2.5vh;
 }
+/* Contains error and report confirmation messages and icons */
 #error-container, #report-container {
     grid-row: 2;
     margin-left: 1vw;
@@ -128,6 +135,7 @@ ul {
     grid-row: 2;
     font-size: 2.5vh;
 }
+/* Back button on report.html, search_error.html and search_result.html */
 #back {
     grid-row: 1;
     border: none;
@@ -152,12 +160,15 @@ ul {
     margin-top: 1vh;
     white-space: nowrap;
 }
+
+/* Class for every message bubble */
 .message-box {
     border: 3px solid #FFF;
     border-radius: 22.5px;
     text-align: center;
     position: relative;
 }
+/* Container for AI message bubble and avatar icon */
 .ai-message-container {
     width: 60%;
     height: 60%;
@@ -166,6 +177,7 @@ ul {
     display: grid;
     grid-template-columns: 7% 93%;
 }
+/* Class for AI message bubble */
 .ai-message-box {
     height: 100%;
     grid-column: 2;
@@ -175,6 +187,7 @@ ul {
     grid-template-columns: 93% 7%;
     grid-template-rows: 100%;
 }
+/* Class for AI avatar icon beside message bubble */
 .ai-message-icon {
     grid-column: 1; 
     background-image: url(chatbot-icon.png);
@@ -184,6 +197,7 @@ ul {
     padding: 0;
     margin: 0;
 }
+/* Class for user message bubble */
 .user-message-box {
     width: 60%;
     height: 60%;
@@ -191,6 +205,7 @@ ul {
     margin: auto 0 0 auto;
     border-bottom-right-radius: 0px !important;
 }
+/* Individual styling for searched-for message on search_results.html */
 .query-message-box {
     background: #0fb500 !important;
 }
@@ -206,6 +221,8 @@ ul {
 .ai-message-text {
     grid-column: 1;
 }
+
+/* Report button inside AI message bubble */
 .report-button {
     grid-column: 2;
     background-color: transparent;
@@ -223,6 +240,7 @@ ul {
     outline: none !important;
     box-shadow: none !important;
 }
+/* For centring modal dialog box */
 .vertical-alignment-helper {
     display: table;
     height: 100%;
@@ -234,8 +252,10 @@ ul {
     vertical-align: middle;
     pointer-events: none;
 }
+
+/* All modal content */
 .modal-content {
-    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    /* Inheriting the size of the modal from Bootstrap */
     width: inherit;
     max-width: inherit; /* To avoid the modal window stretching full width */
     height: inherit; /* To center horizontally */
@@ -284,6 +304,8 @@ ul {
     padding: 4px;
     width: 60%
 }
+
+/* Setting order of message bubbles (There must be a better way to do this???) */
 #message-1 {
     grid-row: 9;
 }
@@ -349,7 +371,6 @@ ul {
 
 
 /* content for header div */
-
 #header {
     grid-column: 2 / 4;
     grid-row: 1;
@@ -377,7 +398,6 @@ ul {
 
 
 /* content for sidebar div */
-
 #sidebar {
     grid-column: 1;
     grid-row: 1 / 3;
@@ -414,7 +434,6 @@ ul {
 
 
 /* content for settings div */
-
 #settings {
     grid-column: 1;
     grid-row: 3;
