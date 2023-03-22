@@ -69,7 +69,7 @@ def reply_generator(message: str) -> Union[str, float]:
     print(f'Input sequence: {message}')
 
     # Declares tokenizer
-    tokenizer = BlenderbotTokenizer.from_pretrained(name, cache_dir='./tokenizer')
+    tokenizer = BlenderbotTokenizer.from_pretrained(name, cache_dir='data/tokenizers')
 
     print('Tokenizing input')
 
@@ -116,7 +116,7 @@ def model_generation(name: str, input_ids: torch.Tensor) -> torch.Tensor:
     """Generates response sequence using an already tokenized input"""
     
     # Declares model
-    model = BlenderbotForConditionalGeneration.from_pretrained(name, cache_dir='./model')
+    model = BlenderbotForConditionalGeneration.from_pretrained(name, cache_dir='data/models')
     
     print('Generating reply ids')
     # Generates Reply ids
@@ -246,7 +246,7 @@ def record_message() -> None:
     """Records all audio from microphone for 5 seconds"""
     
     sample_rate = 16000
-    duration = 2
+    duration = 5
     file_name = r'temp_audio.wav'
 
     print('recording')
@@ -267,8 +267,8 @@ def asr_transcribe():
     
     file_name = r"C:\Users\kazik\Downloads\f2bjrop1.0.wav"
     model_name = "facebook/wav2vec2-base-960h"
-    model = Wav2Vec2ForCTC.from_pretrained(model_name)
-    processor = Wav2Vec2Processor.from_pretrained(model_name)
+    model = Wav2Vec2ForCTC.from_pretrained(model_name, cache_dir='data/models')
+    processor = Wav2Vec2Processor.from_pretrained(model_name, cache_dir='data/processors')
 
     speech = load_data(file_name)
     print('Loaded speech file')
