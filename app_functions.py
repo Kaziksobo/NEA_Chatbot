@@ -248,9 +248,10 @@ def record_message() -> None:
     sample_rate = 16000
     duration = 5
     file_name = r'temp_audio.wav'
+    frames = sample_rate * duration
 
     print('recording')
-    my_data = sd.rec(int(sample_rate * duration), samplerate=sample_rate, channels=2)
+    my_data = sd.rec(frames, samplerate=sample_rate, channels=2)
     sd.wait()
     print('recording ended')
     sf.write(file_name, my_data, sample_rate)
@@ -287,5 +288,7 @@ def asr_transcribe():
     transcription = format_message(transcription)
     
     print(f'Transcription: {transcription}')
+    
+    remove('temp_audio.wav')
     
     return transcription
