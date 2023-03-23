@@ -260,7 +260,7 @@ def load_data(input_file: str) -> np.ndarray:
     """Loads speech data from audio file"""
 
     speech, sample_rate = sf.read(input_file)
-    return speech
+    return speech, sample_rate
 
 
 def asr_transcribe() -> str:
@@ -271,10 +271,10 @@ def asr_transcribe() -> str:
     model = Wav2Vec2ForCTC.from_pretrained(model_name, cache_dir='data/models')
     processor = Wav2Vec2Processor.from_pretrained(model_name, cache_dir='data/processors')
 
-    speech = load_data(file_name)
+    speech, sample_rate = load_data(file_name)
     print('Loaded speech file')
     # Tokenize
-    input_values = processor(speech, return_tensors="pt", sampling_rate=16000).input_values
+    input_values = processor(speech, return_tensors="pt", sampling_rate=sample_rate).input_values
     print('Processed input values')
     # Take logits
     logits = model(input_values).logits
