@@ -263,18 +263,18 @@ def load_data(input_file: str) -> np.ndarray:
     return speech
 
 
-def asr_transcribe():
+def asr_transcribe() -> str:
     """Uses pre-trained Wav2Vec transformer for automatic speech recognition on given audio file"""
     
-    file_name = r"C:\Users\kazik\Downloads\f2bjrop1.0.wav"
-    model_name = "facebook/wav2vec2-base-960h"
+    file_name = r'temp_audio.wav'
+    model_name = 'facebook/wav2vec2-base-960h'
     model = Wav2Vec2ForCTC.from_pretrained(model_name, cache_dir='data/models')
     processor = Wav2Vec2Processor.from_pretrained(model_name, cache_dir='data/processors')
 
     speech = load_data(file_name)
     print('Loaded speech file')
     # Tokenize
-    input_values = processor(speech, return_tensors="pt").input_values
+    input_values = processor(speech, return_tensors="pt", sampling_rate=16000).input_values
     print('Processed input values')
     # Take logits
     logits = model(input_values).logits
