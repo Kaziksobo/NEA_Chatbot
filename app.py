@@ -30,21 +30,28 @@ def main() -> flask.Response:
     
     global stylesheet, current_page
     
+    # Deletes and recreates main log file
     remove('log.csv')
     create_log_file('log.csv')
     
+    # Render home page with appropriate stylesheet and datalist
     current_page = 'index.html'
     return render_template('index.html', stylesheet=stylesheet, messages_list=get_messages_list())
 
 @app.route('/home', methods=['GET', 'POST'])
 def home() -> flask.Response:
-    """Displayes the home page 'index.html' and clears temp logs"""
+    """
+    Displayes the home page 'index.html' and clears temp logs \n
+    This is the same as the main() function, however is used for when the home button is pressed
+    """
     
     global stylesheet, current_page
     
+    # Deletes and recreates main log file
     remove('log.csv')
     create_log_file('log.csv')
     
+    # Render home page with appropriate stylesheet and datalist
     current_page = 'index.html'
     return render_template('index.html', stylesheet=stylesheet, messages_list=get_messages_list())
 
@@ -54,9 +61,11 @@ def message() -> flask.Response:
     
     global stylesheet, current_page, chat_history
     
+    # If there is nothing in the text input, use audio input
     if request.form.to_dict()['message-input'] == '':
         record_message()
         user_message = asr_transcribe()
+    # Otherwise use text input
     else:
         user_message = request.form['message-input']
         user_message = format_message(user_message)
@@ -68,9 +77,13 @@ def message() -> flask.Response:
         time_taken=time
     )
 
+    # Reading in chat history from log file
     chat_history = log_reader('log.csv', format=True, len_limit=True)
+    
+    # Generating Ids for chat messages to order them with CSS ids
     chat_history = message_id_generator(chat_history)
 
+    # Render message page with chat history, appropriate stylesheet and datalist
     current_page = 'message.html'
     return render_template('message.html', stylesheet=stylesheet, messages=chat_history, messages_list=get_messages_list())
 
@@ -80,6 +93,7 @@ def theme_switcher() -> flask.Response:
     
     global current_page, current_theme, stylesheet, chat_history, query_message, reported_message
     
+    # Switch stylesheet and theme
     if current_theme == 'light':
         current_theme = 'dark'
         stylesheet = 'static/dark-styles.css'
@@ -87,6 +101,7 @@ def theme_switcher() -> flask.Response:
         current_theme = 'light'
         stylesheet = 'static/light-styles.css'
     
+    # Render current page with corrected stylesheet
     if current_page == 'message.html': 
         return render_template(current_page, stylesheet=stylesheet, messages=chat_history, messages_list=get_messages_list())
     elif current_page == 'search_result.html':
@@ -104,45 +119,55 @@ def search() -> flask.Response:
     
     global messages_to_display, current_page, stylesheet, query_message
     
+    # Use text input to get query message
     query_message = request.form['search-bar']
     
     print(f'Search query - {query_message}')
 
-    location = False
-
+    # Get full chat history and reverse
     history = log_reader('ext_log.csv', format=True)
-    
     history.reverse()
     
+    # Find location of query message in message history
+    location = False
     for message_info in history:
         if message_info['text'] == query_message:
             print(f'Found message - {message_info}')
             location = history.index(message_info)
     
+    # If the message could not be found in the history, an error page is rendered, which references the query message
     if not location:
         current_page = 'search_error.html'
-        return render_template(current_page, stylesheet=stylesheet, message=query_message)
+        return render_template(current_page, stylesheet=stylesheet, message=query_message, messages_list=get_messages_list())
     
+    # Selects the number of messages to show before and after the query message
     messages_before, messages_after = message_selector(len(history), location)
     
+    # Uses messages_before and messages_after to create a list of messages to show to the user
+    # selects messages from the history with indexes between (location + messages_before) and (location - messages_after + 1)
     messages_to_display = [history[i] for i in range((location + (messages_after)), (location - (messages_before + 1)), -1)]
+    
+    # Generating Ids for chat messages to order them with CSS ids
     messages_to_display = message_id_generator(messages_to_display)
     
+    # Labels the query message to allow it to have different CSS
     for message in messages_to_display:
         if message['text'] == query_message:
             message['class'] = 'query-message-box'
         else:
             message['class'] = False
     
+    # Render search results page with the list of searched messages to show, appropriate stylesheet and datalist
     current_page = 'search_result.html'
     return render_template(current_page, stylesheet=stylesheet, messages=messages_to_display, messages_list=get_messages_list())
 
 @app.route('/back', methods=['GET', 'POST'])
 def back() -> flask.Response:
-    """Renders the message page when back button on search results page clicked"""
+    """Renders the message page when back button on search results/search error/report page clicked"""
     
     global chat_history, current_page, stylesheet
     
+    # Render message page with chat history, appropriate stylesheet and datalist
     current_page = 'message.html'
     return render_template(current_page, stylesheet=stylesheet, messages=chat_history, messages_list=get_messages_list())
 
@@ -152,18 +177,26 @@ def report() -> flask.Response:
     
     global stylesheet, chat_history, current_page, reported_message
     
+    # Finds the name of the form used to report the message
+    # The name of the form contains the id of the message
     reported_message = list(request.form.to_dict().keys())[0]
+    # Get the report reason from form
     report_reason = request.form[reported_message]
+    # Get message id from report form name
     report_message = reported_message.replace('report-', '')
     
+    # Finds the message with the matching message id as to the one from the report form name
     for message in chat_history:
         if message['id'] == report_message:
             location = chat_history.index(message)
             bot_response = message['text']
+    
+    # Finds the message before the reported message
     user_message = chat_history[location - 1]['text']
     
     log_report(user_message, bot_response, report_reason)
     
+    # Render report page with reported message, appropriate stylesheet and datalist
     current_page = 'report.html'
     return render_template(current_page, stylesheet=stylesheet, message=bot_response, messages_list=get_messages_list())
 
