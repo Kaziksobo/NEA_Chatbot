@@ -48,27 +48,6 @@
                                     <p class="ai-message-text message-text">
                                         {{ message.text }}
                                     </p>
-                                    <button type="button" class="btn btn-info btn-lg report-button" data-toggle="modal" data-target="#report-modal">
-                                    </button>
-                                    <div class="modal fade" role="dialog" id="report-modal" tabindex="-1" aria-labelledby="report-modal-label" aria-hidden="true">
-                                        <div class="vertical-alignment-helper">
-                                            <div class="modal-dialog vertical-align-center">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">
-                                                            Report message
-                                                        </h4>
-                                                        <button type="button" class="btn btn-default modal-close-button" data-dismiss="modal"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <form action="/report" method="post" autocomplete="off" class="report-form">
-                                                            <input type="text" class="report-reason-input" name="report-{{ message.id }}" placeholder="Enter report reason here...">
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         {% else %}
