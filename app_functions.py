@@ -1,4 +1,4 @@
-from transformers import BlenderbotTokenizer, BlenderbotForConditionalGeneration, Wav2Vec2ForCTC, Wav2Vec2Processor
+from transformers import BlenderbotTokenizer, BlenderbotForConditionalGeneration
 from csv import writer, reader
 from os import path, remove
 from time import time
@@ -241,54 +241,3 @@ def get_messages_list() -> list:
     history.reverse()
 
     return [message['text'] for message in history]
-
-def record_message() -> None:
-    """Records all audio from microphone for 5 seconds"""
-    
-    sample_rate = 16000
-    duration = 5
-    file_name = r'temp_audio.wav'
-    frames = sample_rate * duration
-
-    print('recording')
-    my_data = sd.rec(frames, samplerate=sample_rate, channels=2)
-    sd.wait()
-    print('recording ended')
-    sf.write(file_name, my_data, sample_rate)
-
-def load_data(input_file: str) -> np.ndarray:
-    """Loads speech data from audio file"""
-
-    speech, sample_rate = sf.read(input_file)
-    return speech, sample_rate
-
-
-def asr_transcribe() -> str:
-    """Uses pre-trained Wav2Vec transformer for automatic speech recognition on given audio file"""
-    
-    file_name = r'temp_audio.wav'
-    model_name = 'facebook/wav2vec2-base-960h'
-    model = Wav2Vec2ForCTC.from_pretrained(model_name, cache_dir='data/models')
-    processor = Wav2Vec2Processor.from_pretrained(model_name, cache_dir='data/processors')
-
-    speech, sample_rate = load_data(file_name)
-    print('Loaded speech file')
-    # Tokenize
-    input_values = processor(speech, return_tensors="pt", sampling_rate=sample_rate).input_values
-    print('Processed input values')
-    # Take logits
-    logits = model(input_values).logits
-    print('Processed logits')
-    # Take argmax
-    predicted_ids = torch.argmax(logits, dim=-1)
-    # Get the words from predicted word ids
-    transcription = processor.decode(predicted_ids[0])
-    print('Decoded transcription')
-    # Correcting the letter casing
-    transcription = format_message(transcription)
-    
-    print(f'Transcription: {transcription}')
-    
-    remove('temp_audio.wav')
-    
-    return transcription

@@ -10,8 +10,6 @@ from app_functions import (
     create_log_file, 
     log_report, 
     get_messages_list,
-    record_message,
-    asr_transcribe
 )
 
 current_theme = 'light'
@@ -61,14 +59,9 @@ def message() -> flask.Response:
     
     global stylesheet, current_page, chat_history
     
-    # If there is nothing in the text input, use audio input
-    if request.form.to_dict()['message-input'] == '':
-        record_message()
-        user_message = asr_transcribe()
-    # Otherwise use text input
-    else:
-        user_message = request.form['message-input']
-        user_message = format_message(user_message)
+    # Requesting the data entered into the input form (the search bar) by the user
+    user_message = request.form['message-input']
+    user_message = format_message(user_message)
     
     reply, time = reply_generator(user_message)
     log(

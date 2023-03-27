@@ -341,10 +341,11 @@ ul {
     text-align: center;
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 3.5vw 74vw 2.5vw; 
+    grid-template-columns: 77.5vw 2.5vw; 
     grid-template-rows: 6vh;
     margin-bottom: auto;
     gap: 1vw;
+    margin-left: 1vw;
 }
 #message-input {
     padding: 10px;
@@ -357,16 +358,6 @@ ul {
     background-position: center;
     background-size: contain;
     border: none;
-}
-#microphone-button {
-    background-image: url(light-images/microphone.png) !important;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    border: none;
-    padding: 0;
-    margin-left: 1vw;
 }
 
 
