@@ -5,8 +5,6 @@ from time import time
 from datetime import datetime
 from typing import Union
 import torch, re, nltk.data
-import sounddevice as sd
-import soundfile as sf
 import numpy as np
 
 def log_reader(file_address: str, format: bool=False, len_limit: bool=False) -> list:
