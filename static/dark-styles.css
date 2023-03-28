@@ -345,6 +345,7 @@ ul {
     grid-template-rows: 6vh;
     margin-bottom: auto;
     gap: 1vw;
+    margin-left: 1vw;
 }
 #message-input {
     padding: 10px;
@@ -357,16 +358,6 @@ ul {
     background-position: center;
     background-size: contain;
     border: none;
-}
-#microphone-button {
-    background-image: url(dark-images/microphone.png) !important;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    border: none;
-    padding: 0;
-    margin-left: 1vw;
 }
 
 
