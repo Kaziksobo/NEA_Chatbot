@@ -57,7 +57,7 @@ def message_id_generator(chat_history: list) -> list:
     
     return chat_history
 
-def reply_generator(message: str) -> Union[str, float]:
+def reply_generator(message: str, num_beams: int=35) -> Union[str, float]:
     # sourcery skip: extract-duplicate-method
     """Uses Blenderbot to generate a reply to the inputted message"""
     
@@ -89,7 +89,7 @@ def reply_generator(message: str) -> Union[str, float]:
     
     return format_message(reply), round((end - start), 2)
 
-def model_generation(name: str, input_ids: torch.Tensor) -> torch.Tensor:
+def model_generation(name: str, input_ids: torch.Tensor, num_beams: int) -> torch.Tensor:
     """Generates response sequence using an already tokenized input"""
     
     # Declares model
@@ -99,8 +99,8 @@ def model_generation(name: str, input_ids: torch.Tensor) -> torch.Tensor:
     # Generates Reply ids
     result = model.generate(
         input_ids, 
-        # num_beams=35, 
-        # max_length=60
+        num_beams=num_beams, 
+        max_length=60
     )
     print(f'Reply Ids: {result}')
     
