@@ -82,28 +82,7 @@ def reply_generator(message: str) -> Union[str, float]:
     )
 
     print(f'Input Ids: {input_ids}')
-
-    # if chat_history := log_reader('log.csv'):
-    #     print('Tokenizing chat history')
-    #     # Tokenizing chat history
-    #     chat_history_ids = tokenizer.encode(
-    #         chat_history,
-    #         add_special_tokens=True,
-    #         is_split_into_words=False,
-    #         return_tensors='pt'
-    #     )
-        
-    #     print(f'Chat history Ids: {chat_history_ids}')
-
-    #     # Concatenating chat history and input tokens
-    #     bot_input_ids = torch.cat([chat_history_ids, input_ids], dim=-1)
-
-    #     reply_ids = model_generation(name, bot_input_ids)
-        
-    #     # Decodes reply ids
-    #     reply = tokenizer.decode(reply_ids[:, bot_input_ids.shape[-1]:][0], skip_special_tokens=True)
-
-    # else:
+    
     reply_ids = model_generation(name, input_ids)
     reply = tokenizer.decode(reply_ids[0], skip_special_tokens=True)
 
