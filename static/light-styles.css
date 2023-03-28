@@ -34,6 +34,7 @@ ul {
   }
 
   
+
 /* Content for main div */
 /* Divs labelled '-result' are in search_result.html, search_error.html, report.html */
 
@@ -134,7 +135,6 @@ ul {
     grid-row: 2;
     font-size: 2.5vh;
 }
-
 /* Back button on report.html, search_error.html and search_result.html */
 #back {
     grid-row: 1;
@@ -425,7 +425,6 @@ ul {
 
 
 /* content for settings div */
-
 #settings {
     grid-column: 1;
     grid-row: 3;
