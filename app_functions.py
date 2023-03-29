@@ -12,15 +12,17 @@ def log_reader(file_address: str, format: bool=False, len_limit: bool=False) -> 
     Also has the option of formatting the chat history, turning each message into a dictionary,
     specifying if the message came from the model or the user"""
     
-    # Checks if the chat history is empty
+    # If chat history does not exist, function returns none
     if not path.exists(file_address):
         print('No log file found')
         return None
 
+    # Function continues here if the chat history exists
     print('Log file found')
     with open(file_address, 'r') as log_file:
         csv_reader = reader(log_file)
         chat_history = []
+        # Create a list of messages in chat history
         for row in csv_reader:
             # Ignores header row
             if 'User message' in row:
@@ -28,26 +30,36 @@ def log_reader(file_address: str, format: bool=False, len_limit: bool=False) -> 
             # Appends the first two entries in the row to the chat_history list
             chat_history.extend((row[0], row[1]))
     
+    # Reverses the list so that the most recent messages are first (new - old)
     chat_history.reverse()
     
     if format:
-        formatted_chat_history = []
-        if len_limit:
-            for i in range(min(9, len(chat_history))):
-                if i % 2 == 0:
-                    formatted_chat_history.append({'type': 'ai', 'text': chat_history[i]})
-                else:
-                    formatted_chat_history.append({'type': 'user', 'text': chat_history[i]})
-        else:
-            for i in range(len(chat_history)):
-                if i % 2 == 0:
-                    formatted_chat_history.append({'type': 'ai', 'text': chat_history[i]})
-                else:
-                    formatted_chat_history.append({'type': 'user', 'text': chat_history[i]})
-
-        return formatted_chat_history
+        chat_history = format_chat_history(chat_history, len_limit)
     
     return chat_history
+
+def format_chat_history(chat_history: list, len_limit: bool) -> list:
+    """Formats messages in chat history in form:\n
+    {
+        'type': 'ai' or 'user',
+        'text': message content
+    }"""
+    
+    formatted_chat_history = []
+    if len_limit:
+        for i in range(min(9, len(chat_history))):
+            if i % 2 == 0:
+                formatted_chat_history.append({'type': 'ai', 'text': chat_history[i]})
+            else:
+                formatted_chat_history.append({'type': 'user', 'text': chat_history[i]})
+    else:
+        for i in range(len(chat_history)):
+            if i % 2 == 0:
+                formatted_chat_history.append({'type': 'ai', 'text': chat_history[i]})
+            else:
+                formatted_chat_history.append({'type': 'user', 'text': chat_history[i]})
+
+    return formatted_chat_history
 
 def message_id_generator(chat_history: list) -> list:
     """Adds IDs to each message based on their location in the list"""
@@ -81,7 +93,7 @@ def reply_generator(message: str, num_beams: int=35) -> Union[str, float]:
 
     print(f'Input Ids: {input_ids}')
     
-    reply_ids = model_generation(name, input_ids)
+    reply_ids = model_generation(name, input_ids, num_beams)
     reply = tokenizer.decode(reply_ids[0], skip_special_tokens=True)
 
     print(f'Response: {reply}')
