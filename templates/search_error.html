@@ -5,6 +5,7 @@
         <meta name="Description" content="An error page for an incorrect message search">
         <meta name="Author" content="Kazik Sobotnicki">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <!-- Imports different CSS stylesheet depending on Jinja variable -->
         <link rel="stylesheet" href={{stylesheet}}>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -25,6 +26,7 @@
             <div id="header">
                 <form action="/search" method="post" autocomplete="off" id="search-form">
                     <input type="text" id="search-bar" name="search-bar" placeholder="Search messages here..." list="messages-list">
+                    <!-- Adds datalist, with elements from Jinja variable -->
                     <datalist id="messages-list">
                         {% for message in messages_list %}
                             <option value="{{ message }}">
