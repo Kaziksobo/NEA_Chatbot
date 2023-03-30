@@ -32,6 +32,8 @@ def main() -> flask.Response:
     if path.exists('log.csv'):
         remove('log.csv')
     create_log_file('log.csv')
+    if not path.exists('ext_log.csv'):
+        create_log_file('ext_log.csv')
     
     # Render home page with appropriate stylesheet and datalist
     current_page = 'index.html'
