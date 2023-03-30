@@ -1,6 +1,6 @@
 import flask
 from flask import Flask, render_template, request
-from os import remove
+from os import remove, path
 from app_functions import (
     reply_generator, 
     log, log_reader, 
@@ -29,7 +29,8 @@ def main() -> flask.Response:
     global stylesheet, current_page
     
     # Deletes and recreates main log file
-    remove('log.csv')
+    if path.exists('log.csv'):
+        remove('log.csv')
     create_log_file('log.csv')
     
     # Render home page with appropriate stylesheet and datalist
