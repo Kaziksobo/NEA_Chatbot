@@ -141,6 +141,9 @@ def model_generation(name: str, input_ids: torch.Tensor) -> torch.Tensor:
     return result
 
 def beams_calc() -> int:
+    """Calculate num_beams to use in model generation based on CPU frequency.
+    Currently flips between 35 beams in above 3.4GHz, otherwise uses 1 beam"""
+    
     cpu_freq = psutil.cpu_freq()
     cpu_freq = cpu_freq.max
 
