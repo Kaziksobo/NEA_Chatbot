@@ -4,7 +4,7 @@ from os import path, remove
 from time import time
 from datetime import datetime
 from typing import Union
-import torch, re, nltk.data
+import torch, re, nltk.data, psutil
 
 def log_reader(file_address: str, format: bool=False, len_limit: bool=False) -> list:
     """Reads the contents of the log file into a single list, ignoring the time taken and log time columns.\n
@@ -81,7 +81,7 @@ def message_id_generator(chat_history: list) -> list:
 
 
 
-def reply_generator(message: str, num_beams: int=35) -> Union[str, float]:
+def reply_generator(message: str) -> Union[str, float]:
     # sourcery skip: extract-duplicate-method
     """Uses Blenderbot to generate a reply to the inputted message"""
     
@@ -107,7 +107,7 @@ def reply_generator(message: str, num_beams: int=35) -> Union[str, float]:
 
     print(f'Input Ids: {input_ids}')
     
-    reply_ids = model_generation(name, input_ids, num_beams)
+    reply_ids = model_generation(name, input_ids)
     
     # Decodes tokens from model, avoiding special tokens so they do not appear in the input
     reply = tokenizer.decode(reply_ids[0], skip_special_tokens=True)
@@ -120,11 +120,13 @@ def reply_generator(message: str, num_beams: int=35) -> Union[str, float]:
     # Returns message, and the time taken is calculated by subtracting the exact time at the start from the time at the end
     return format_message(reply), round((end - start), 2)
 
-def model_generation(name: str, input_ids: torch.Tensor, num_beams: int) -> torch.Tensor:
+def model_generation(name: str, input_ids: torch.Tensor) -> torch.Tensor:
     """Uses BlenderBot to generate a response sequence to the inputted tokens, with beam search for text generation"""
     
     # Declares model
     model = BlenderbotForConditionalGeneration.from_pretrained(name, cache_dir='data/models')
+    
+    num_beams = beams_calc()
     
     print('Generating reply ids')
     # Generates Reply ids using beam search to generate text
@@ -133,9 +135,16 @@ def model_generation(name: str, input_ids: torch.Tensor, num_beams: int) -> torc
         num_beams=num_beams, 
         max_length=60
     )
+    print(f'num_beams used: {num_beams}')
     print(f'Reply Ids: {result}')
     
     return result
+
+def beams_calc() -> int:
+    cpu_freq = psutil.cpu_freq()
+    cpu_freq = cpu_freq.max
+
+    return 35 if cpu_freq > 3400 else 4
 
 def format_message(message: str) -> str:
     """Formats message to capitalise and remove whitespace and fix some grammar errors"""
