@@ -144,7 +144,7 @@ def beams_calc() -> int:
     cpu_freq = psutil.cpu_freq()
     cpu_freq = cpu_freq.max
 
-    return 35 if cpu_freq > 3400 else 4
+    return 35 if cpu_freq > 3400 else 1
 
 def format_message(message: str) -> str:
     """Formats message to capitalise and remove whitespace and fix some grammar errors"""
