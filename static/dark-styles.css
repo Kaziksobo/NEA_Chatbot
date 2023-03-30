@@ -75,7 +75,7 @@ ul {
     gap: 5%;
 }
 #warning-icon {
-    background-image: url(light-images/info.png);
+    background-image: url(dark-images/info.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -341,7 +341,7 @@ ul {
     text-align: center;
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 3.5vw 74vw 2.5vw; 
+    grid-template-columns: 77.5vw 2.5vw; 
     grid-template-rows: 6vh;
     margin-bottom: auto;
     gap: 1vw;
