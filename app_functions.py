@@ -172,7 +172,9 @@ def format_message(message: str) -> str:
 def english_check(message: str) -> bool:
     """Checks if the message is understandable english by tokenizing it into words, and checking if at least one of them is in the dictionary"""
     
+    # Used NLTK word tokenizer to split the message into a list of words
     words_list = word_tokenize(message)
+    # Returns true if any words in the list of words are in the english dictionary
     return any(word in words.words() for word in words_list) 
 
 
