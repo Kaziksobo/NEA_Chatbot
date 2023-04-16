@@ -174,7 +174,6 @@ def english_check(message: str) -> bool:
     
     # Used NLTK word tokenizer to split the message into a list of words
     words_list = word_tokenize(message)
-    print(words.words())
     return any(word.lower() in words.words() for word in words_list)
 
 
