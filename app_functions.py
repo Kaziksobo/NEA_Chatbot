@@ -158,6 +158,8 @@ def format_message(message: str) -> str:
     message = re.sub(r'\s(?=[\.,:;])', "", message)
     # Removes any whitespace from the start and end of the message
     message = message.strip()
+    # Capitalises any bare Is
+    message.replace(' i ', ' I ')
     # Uses NLTK to split the message into a list of sentences
     sent_tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
     sentences = sent_tokenizer.tokenize(message)
