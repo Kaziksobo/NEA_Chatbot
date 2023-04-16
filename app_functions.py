@@ -174,8 +174,8 @@ def english_check(message: str) -> bool:
     
     # Used NLTK word tokenizer to split the message into a list of words
     words_list = word_tokenize(message)
-    # Returns true if any words in the list of words are in the english dictionary
-    return any(word in words.words() for word in words_list) 
+    print(words.words())
+    return any(word.lower() in words.words() for word in words_list)
 
 
 def log(user_message: str, bot_response: str, time_taken: float) -> None:
