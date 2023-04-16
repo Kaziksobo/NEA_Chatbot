@@ -349,6 +349,7 @@ ul {
 }
 #message-input {
     padding: 10px;
+    padding-left: 15px;
     font-size: 2.5vh;
 }
 #message-submit-button {
@@ -379,7 +380,7 @@ ul {
     background-repeat: no-repeat;
     background-size: contain;
     padding: 4px;
-    padding-left: 50px;
+    padding-left: 60px;
     height: 3vh;
     width: 40vw;
     margin-right: 4vw;
