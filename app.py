@@ -19,7 +19,7 @@ stylesheet = 'static/light-styles.css'
 chat_history = []
 messages_to_display = []
 query_message = ''
-report_message = ''
+reported_message = ''
 
 app = Flask(__name__)
 
@@ -93,7 +93,7 @@ def message() -> flask.Response:
 def theme_switcher() -> flask.Response:
     """Switches the theme of the web app"""
     
-    global current_page, current_theme, stylesheet, chat_history, query_message, report_message
+    global current_page, current_theme, stylesheet, chat_history, query_message, reported_message
     
     # Switch stylesheet and theme
     if current_theme == 'light':
@@ -111,7 +111,7 @@ def theme_switcher() -> flask.Response:
     elif current_page == 'search_error.html':
         return render_template(current_page, stylesheet=stylesheet, message=query_message, messages_list=get_messages_list())
     elif current_page == 'report.html':
-        return render_template(current_page, stylesheet=stylesheet, message=report_message, messages_list=get_messages_list())
+        return render_template(current_page, stylesheet=stylesheet, message=reported_message, messages_list=get_messages_list())
     else:
         return render_template(current_page, stylesheet=stylesheet, messages_list=get_messages_list())
 
@@ -177,7 +177,7 @@ def back() -> flask.Response:
 def report() -> flask.Response:
     """Logs the report and renders report page"""
     
-    global stylesheet, chat_history, current_page, report_message
+    global stylesheet, chat_history, current_page, reported_message
     
     # Finds the name of the form used to report the message
     # The name of the form contains the id of the message
@@ -192,7 +192,7 @@ def report() -> flask.Response:
         if message['id'] == report_message:
             location = chat_history.index(message)
             bot_response = message['text']
-    
+    reported_message = bot_response
     # Finds the message before the reported message
     user_message = chat_history[location - 1]['text']
     
