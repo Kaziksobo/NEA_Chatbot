@@ -4,6 +4,8 @@ from os import path, remove
 from time import time
 from datetime import datetime
 from typing import Union
+from nltk.corpus import words
+from nltk import word_tokenize
 import torch, re, nltk.data, psutil
 
 def log_reader(file_address: str, format: bool=False, len_limit: bool=False) -> list:
@@ -165,6 +167,11 @@ def format_message(message: str) -> str:
     
     return message
 
+def english_check(message: str) -> bool:
+    """Checks if the message is understandable english by tokenizing it into words, and checking if at least one of them is in the dictionary"""
+    
+    words_list = word_tokenize(message)
+    return any(word in words.words() for word in words_list) 
 
 
 def log(user_message: str, bot_response: str, time_taken: float) -> None:

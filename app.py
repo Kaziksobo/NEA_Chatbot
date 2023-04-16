@@ -10,6 +10,7 @@ from app_functions import (
     create_log_file, 
     log_report, 
     get_messages_list,
+    english_check
 )
 
 current_theme = 'light'
@@ -66,7 +67,12 @@ def message() -> flask.Response:
     user_message = request.form['message-input']
     user_message = format_message(user_message)
     
-    reply, time = reply_generator(user_message)
+    if english_check(user_message):
+        reply, time = reply_generator(user_message)
+    else:
+        reply = 'That makes no sense'
+        time = 0
+    
     log(
         user_message=user_message,
         bot_response=reply,
